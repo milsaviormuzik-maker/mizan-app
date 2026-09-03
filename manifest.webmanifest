@@ -1,0 +1,51 @@
+{
+  "name": "Mizan — Günün, ibadetin, dengen.",
+  "short_name": "Mizan",
+  "description": "Namaz vakitleri, Kur'an, dualar, kıble, tesbih ve Ramazan tek uygulamada.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "./index.html#/bugun",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1220",
+  "theme_color": "#152238",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/logo.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Namaz Vakitleri",
+      "short_name": "Vakitler",
+      "url": "./index.html#/ibadet/vakitler"
+    },
+    {
+      "name": "Kur'an — kaldığın yerden",
+      "short_name": "Kur'an",
+      "url": "./index.html#/kuran"
+    },
+    {
+      "name": "Kıble",
+      "short_name": "Kıble",
+      "url": "./index.html#/ibadet/kible"
+    }
+  ]
+}

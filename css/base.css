@@ -1,0 +1,400 @@
+/* ============================================================
+   MİZAN — Temel katman: reset, tipografi, kabuk, atmosfer
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink-900);
+  background: #E7E2D8;
+  overscroll-behavior: none;
+}
+
+:root[data-theme="dark"] body { background: #04060A; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) body { background: #04060A; }
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+}
+button { background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, h4, p { margin: 0; }
+img, svg { display: block; max-width: 100%; }
+
+::selection { background: var(--gold-soft); color: var(--ink-900); }
+
+/* ---------- Kaydırma çubuğu ---------- */
+.scroll { overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { width: 0; height: 0; }
+
+/* ============================================================
+   CİHAZ KABUĞU — masaüstünde telefon çerçevesi, mobilde tam ekran
+   ============================================================ */
+.stage {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+  background:
+    radial-gradient(1100px 620px at 50% -10%, rgba(21, 34, 56, .10), transparent 62%),
+    linear-gradient(180deg, #EDE8DE 0%, #DFD9CD 100%);
+}
+:root[data-theme="dark"] .stage {
+  background:
+    radial-gradient(1100px 620px at 50% -10%, rgba(200, 165, 87, .07), transparent 62%),
+    linear-gradient(180deg, #0A0D14 0%, #05070B 100%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .stage {
+    background:
+      radial-gradient(1100px 620px at 50% -10%, rgba(200, 165, 87, .07), transparent 62%),
+      linear-gradient(180deg, #0A0D14 0%, #05070B 100%);
+  }
+}
+
+.device {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  border-radius: 54px;
+  background: #0A0C10;
+  padding: 11px;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, .06) inset,
+    0 40px 90px rgba(11, 18, 32, .34),
+    0 8px 24px rgba(11, 18, 32, .2);
+  flex: none;
+}
+
+.device__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 44px;
+  /* clip: kapalı alt sayfa taşması kaydırma alanı oluşturmasın */
+  overflow: hidden;
+  overflow: clip;
+  background: var(--bg);
+  isolation: isolate;
+}
+
+/* Dinamik ada */
+.device__island {
+  position: absolute;
+  top: 11px; left: 50%;
+  transform: translateX(-50%);
+  width: 118px; height: 34px;
+  border-radius: var(--r-full);
+  background: #0A0C10;
+  z-index: 90;
+  pointer-events: none;
+}
+
+/* Ana sayfa çizgisi */
+.device__bar {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  width: 138px; height: 5px;
+  border-radius: var(--r-full);
+  background: var(--ink-900);
+  opacity: .26;
+  z-index: 95;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .stage { padding: 0; background: var(--bg); display: block; }
+  .device {
+    width: 100%; height: 100dvh;
+    border-radius: 0; padding: 0; box-shadow: none; background: var(--bg);
+  }
+  .device__screen { border-radius: 0; }
+  .device__island { display: none; }
+  .device__bar { bottom: 3px; }
+}
+
+/* ============================================================
+   UYGULAMA ÇERÇEVESİ
+   ============================================================ */
+.app {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  transition: background var(--dur-atmos) ease-in-out;
+}
+
+.viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Ekranlar üst üste; aktif olan görünür */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.screen.is-active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+/* Sekme üstü itilen ekranlar */
+.screen.is-pushed {
+  z-index: 20;
+  animation: push-in var(--dur-push) var(--ease);
+}
+@keyframes push-in {
+  from { transform: translateX(26px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.screen__body {
+  flex: 1;
+  min-height: 0;
+  padding: 0 var(--gutter) 26px;
+}
+.screen__body--flush { padding-left: 0; padding-right: 0; }
+
+/* Sekme çubuğu için alt boşluk */
+.pad-tabbar { padding-bottom: 104px; }
+.pad-safe   { padding-bottom: 34px; }
+
+/* ============================================================
+   ATMOSFER — vakte göre kayan başlık zemini
+   ============================================================ */
+.atmos {
+  position: relative;
+  padding: 62px var(--gutter) 30px;
+  color: var(--atmos-ink);
+  /* Üç katman: yumuşak ışık kaynağı → ana gradyan → ince grenaj.
+     Tek gradyan büyük alanda bantlanır ve düz görünür. */
+  background:
+    var(--atmos-glow, none),
+    radial-gradient(120% 88% at 78% 6%, rgba(255, 255, 255, .10), transparent 58%),
+    radial-gradient(90% 64% at 12% 100%, rgba(0, 0, 0, .18), transparent 66%),
+    linear-gradient(168deg, var(--atmos-a) 0%, var(--atmos-b) 100%);
+  transition: background var(--dur-atmos) ease-in-out;
+  overflow: hidden;
+}
+/* Grenaj — bantlanmayı keser, malzemeye doku verir */
+.atmos::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: var(--grain);
+  opacity: .06;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+/* Atmosferin alt kenarı sayfaya yumuşak geçsin, sert kesilmesin */
+.atmos-fade {
+  height: 28px;
+  margin-top: -28px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+/* Girih dokusu — maskeyle çizilir, böylece atmosferin mürekkebini alır
+   ve hem açık hem koyu zeminde aynı incelikte kalır. opacity ≤ .06 */
+.atmos::after {
+  content: "";
+  position: absolute;
+  top: -74px; right: -84px;
+  width: 268px; height: 268px;
+  /* Tek girih yıldızı, kenarlara doğru sönerek. Sönümleme rengin
+     kendisinde olduğu için mask-composite'e gerek kalmaz. */
+  background: radial-gradient(closest-side at 50% 50%,
+    var(--atmos-ink) 0%,
+    color-mix(in srgb, var(--atmos-ink) 55%, transparent) 52%,
+    transparent 84%);
+  -webkit-mask-image: var(--girih-star);
+  mask-image: var(--girih-star);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: .13;
+  pointer-events: none;
+}
+/* Kart içi girih katmanı — SÜSTÜR, tıklamayı yutmamalıdır.
+   Dekoratif her örtü katmanı pointer-events: none almak zorundadır. */
+.girih-layer {
+  position: absolute;
+  inset: 0;
+  background-image: var(--girih);
+  background-size: 96px 96px;
+  opacity: .05;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.girih-layer--sm { background-size: 80px 80px; }
+
+/* Ramazan: palet değişmez, atmosfere yalnızca altın bir üst ışık eklenir */
+:root[data-ramadan="1"] {
+  --atmos-glow: radial-gradient(120% 70% at 50% -14%, rgba(216, 183, 106, .20), transparent 62%);
+}
+
+/* ============================================================
+   TİPOGRAFİ YARDIMCILARI
+   ============================================================ */
+.t-display { font-family: var(--font-display); letter-spacing: -.02em; }
+
+/* Geri sayım — ölçüm aleti gibi: grotesk, tabular, ince.
+   Saniye kasıtlı olarak küçülür; göz önce saat:dakikayı okur. */
+.t-count {
+  font-family: var(--font-display);
+  font-size: 54px; line-height: 1.02; font-weight: 250;
+  letter-spacing: -.035em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+.t-count__sec {
+  font-size: .52em;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  opacity: .48;
+  margin-left: .06em;
+}
+.t-vakit {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase;
+}
+/* Başlıklar editoryal serif — marka kelime işaretiyle aynı ses */
+.t-h1 {
+  font-family: var(--font-serif);
+  font-size: 33px; line-height: 1.12; font-weight: 400;
+  letter-spacing: -.012em;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+.t-h2 {
+  font-family: var(--font-serif);
+  font-size: 23px; line-height: 1.24; font-weight: 400;
+  letter-spacing: -.008em;
+  text-wrap: balance;
+}
+.t-h3 {
+  font-family: var(--font-serif);
+  font-size: 19px; line-height: 1.32; font-weight: 500;
+  letter-spacing: -.004em;
+  text-wrap: balance;
+}
+.t-body { font-size: 15px; line-height: 1.6; }
+.t-sec  { font-size: 13px; line-height: 1.46; color: var(--ink-500); }
+.t-cap  { font-size: 11px; line-height: 1.3; font-weight: 500; letter-spacing: .06em; color: var(--ink-500); }
+.t-num  { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+.t-gold { color: var(--gold); }
+.t-mute { color: var(--ink-500); }
+.t-dim  { color: var(--ink-300); }
+.t-center { text-align: center; }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-500);
+  margin: var(--section) 0 13px;
+  display: flex; align-items: center; gap: 12px;
+}
+/* Bölüm başlığından sonra ince altın çizgi — hiyerarşiyi susarak kurar */
+.section-title::after {
+  content: "";
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--gold-line), transparent);
+}
+.section-title:first-child { margin-top: 24px; }
+
+.arabic {
+  font-family: var(--font-arabic);
+  font-size: 26px;
+  line-height: 2.25;
+  direction: rtl;
+  text-align: right;
+  font-weight: 400;
+  color: var(--ink-900);
+  /* Vahiy metni sayfada nefes almalı: şiir gibi dizilir, sıkıştırılmaz */
+  padding-block: 2px;
+  text-rendering: optimizeLegibility;
+}
+.translit { font-size: 14px; line-height: 1.62; font-style: italic; color: var(--ink-700); }
+.source { font-size: 12px; color: var(--ink-500); letter-spacing: .01em; }
+
+/* ============================================================
+   YARDIMCI DÜZEN
+   ============================================================ */
+.row { display: flex; align-items: center; }
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.col { display: flex; flex-direction: column; }
+.gap-4 { gap: 4px; } .gap-6 { gap: 6px; } .gap-8 { gap: 8px; }
+.gap-10 { gap: 10px; } .gap-12 { gap: 12px; } .gap-16 { gap: 16px; }
+.stack > * + * { margin-top: var(--stack); }
+.grow { flex: 1; min-width: 0; }
+.hairline { height: 1px; background: var(--gold-line); border: 0; margin: 0; opacity: .8; }
+.divider { height: 1px; background: var(--line); border: 0; margin: 0; }
+.hidden { display: none !important; }
+
+/* Basılı geri bildirim */
+.pressable { transition: transform 120ms ease-out, opacity 120ms ease-out; }
+.pressable:active { transform: scale(.985); opacity: .92; }
+
+/* ============================================================
+   GİRİŞ HAREKETİ
+   Kartlar sırayla, çok az yükselerek belirir. Amaç gösteri değil,
+   ekranın bir anda "yapıştırılmış" gibi durmaması.
+   ============================================================ */
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+/* Varsayılan durum GÖRÜNÜR: animasyon hiç çalışmazsa bile içerik kaybolmaz.
+   Giriş hareketi yalnızca kullanıcı hareket istiyorsa eklenir. */
+@media (prefers-reduced-motion: no-preference) {
+  .stagger > * { animation: rise-in 440ms var(--ease) backwards; }
+  .stagger > *:nth-child(1) { animation-delay: 20ms; }
+  .stagger > *:nth-child(2) { animation-delay: 60ms; }
+  .stagger > *:nth-child(3) { animation-delay: 100ms; }
+  .stagger > *:nth-child(4) { animation-delay: 138ms; }
+  .stagger > *:nth-child(5) { animation-delay: 172ms; }
+  .stagger > *:nth-child(6) { animation-delay: 200ms; }
+  .stagger > *:nth-child(7) { animation-delay: 222ms; }
+  .stagger > *:nth-child(n+8) { animation-delay: 240ms; }
+}
+
+/* Odak */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
