@@ -227,7 +227,19 @@
 
 /* Açılış sırası — sırayla, sakin */
 @media (prefers-reduced-motion: no-preference) {
-  .onb__medallion { animation: onb-medallion 2200ms var(--ease-soft) both; }
+  /* Madalyon yerine oturduktan sonra dönmeyi sürdürür: devir, girişin bittiği
+     anda devralır. Tam tur 150 sn — saniyede 2.4°: bakınca fark edilir,
+     okurken rahatsız etmez.
+
+     Girişte DOLGU YOK. `both` olsaydı animasyon bittikten sonra da
+     `transform: none`ı doldurmayı sürdürür ve listede kendisinden sonra gelen
+     deviri ezerdi (dolan bir animasyon "yürürlükte" sayılır). Bitiş durumu
+     zaten kuralın kendisinde: opaklık .2, dönüşüm yok. */
+  .onb__medallion {
+    animation:
+      onb-medallion 2200ms var(--ease-soft),
+      onb-devir 150s linear 2200ms infinite;
+  }
   .onb__logo      { animation: onb-logo 1100ms var(--ease-soft) 120ms both; }
   .onb__rule      { animation: onb-rule 800ms var(--ease) 620ms both; }
   .onb__tag       { animation: onb-rise 900ms var(--ease) 780ms both; }
@@ -236,6 +248,9 @@
 @keyframes onb-medallion {
   from { opacity: 0; transform: scale(.86) rotate(-9deg); }
   to   { opacity: .2; transform: none; }
+}
+@keyframes onb-devir {
+  to { transform: rotate(360deg); }
 }
 @keyframes onb-rise {
   from { opacity: 0; transform: translateY(14px); }
