@@ -16,7 +16,6 @@ import {
   HAJJ_STEPS
 } from '../data/content.js';
 import { topbar, segment, duaCard, hadithCard, empty } from './_blocks.js';
-import { girihPanel } from '../core/motifs.js';
 import { sharedActions, shareDua, listenDua, shareHadith } from './_actions.js';
 
 /* ============================================================
@@ -33,8 +32,7 @@ export const exploreScreen = {
 
             <section class="card card--tap card--dark" style="margin-top:18px;background:var(--navy)"
               data-act="go" data-path="/kesfet/sor">
-              <span class="girih-panel">${girihPanel()}</span>
-              <div class="row-between" style="position:relative">
+              <div class="row-between">
                 <div class="grow">
                   <span class="card__label" style="color:var(--gold)">Mizan Sor</span>
                   <p class="t-h2" style="margin-top:9px;color:var(--on-navy)">Dini bir sorun mu var?</p>

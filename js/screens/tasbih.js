@@ -8,7 +8,6 @@ import { icon } from '../core/icons.js';
 import { state, commit } from '../core/state.js';
 import { back } from '../core/router.js';
 import { topbar, switchRow } from './_blocks.js';
-import { semse } from '../core/motifs.js';
 import { ZIKIRS } from '../data/content.js';
 
 
@@ -43,7 +42,6 @@ export const tasbihScreen = {
                 style="position:relative;width:236px;height:236px;border-radius:50%;
                   background:var(--surface);border:1px solid var(--line);box-shadow:none;
                   display:grid;place-items:center;transition:transform 90ms ease-out">
-                <span class="semse-arka">${semse(224, { donen: true })}</span>
                 <span style="position:absolute;inset:0;display:grid;place-items:center;color:var(--ink-300)" data-ring>
                   ${ringSvg(0, 236, 5)}
                 </span>

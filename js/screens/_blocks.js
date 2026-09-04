@@ -4,7 +4,6 @@
    ============================================================ */
 
 import { icon } from '../core/icons.js';
-import { kartus, zencerek } from '../core/motifs.js';
 import { esc } from '../core/ui.js';
 import { state } from '../core/state.js';
 import { surahName } from '../data/quran-surahs.js';
@@ -16,7 +15,6 @@ export function verseCard(verse, opts = {}) {
   const ref = `${verse.surah}:${verse.ayah}`;
   return `
   <section class="card card--verse" data-verse="${ref}">
-    ${kartus()}
     <div class="card__head">
       <span class="card__label">${opts.label ?? 'Günün Âyeti'}</span>
       <span class="card__ref">${esc(surahName(verse.surah))} · ${verse.ayah}</span>
@@ -123,11 +121,6 @@ export function switchRow({ title, sub, on, act, data = {} }) {
 }
 
 /* ---------------- Segment ---------------- */
-/** Bölüm başlığı — yanında zencerek örgüsü */
-export function sectionTitle(text) {
-  return `<p class="section-title"><span>${esc(text)}</span>${zencerek(160)}</p>`;
-}
-
 export function segment(items, activeId, act) {
   // Kısa listeler taşmaz; kenar sönümlemesi yalnızca kaydırma gerektiğinde
   const fit = items.length <= 3 ? ' segment--fit' : '';
