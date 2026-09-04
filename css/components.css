@@ -903,10 +903,20 @@
    ZORUNLU: pointer-events:none — bu bir örtüdür, altındaki
    düğmenin tıklamasını yutarsa hata görünmez olur.
    ============================================================ */
+/* İKİ KATMAN — çünkü sönümleme dönmemeli.
+   Dış katman (.desen-kose) sabit durur ve sönümleme maskesini taşır:
+   kart köşesinde tam görünür, içeri doğru gidince yok olur. İç katman
+   (.desen-kose__i) deseni taşır ve döner. Tek katman olsaydı sönümleme
+   de dönerdi ve "güçlü nokta" kartın içinde dolaşırdı. */
 .desen-kose {
   position: absolute;
   width: 176px; height: 176px;
   pointer-events: none;
+  overflow: hidden;
+  opacity: .1;
+}
+.desen-kose__i {
+  position: absolute; inset: 0;
   background: var(--gold);
   -webkit-mask-image: var(--desen);
   mask-image: var(--desen);
@@ -914,24 +924,43 @@
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: .13;
 }
-/* Dört köşe — yarısı dışarı taşar */
-.desen-kose--su { top: -62px; left: -62px; }
-.desen-kose--sa { top: -62px; right: -62px; }
-.desen-kose--au { bottom: -62px; left: -62px; }
-.desen-kose--aa { bottom: -62px; right: -62px; }
+
+/* Dört köşe. Sönümleme merkezi KARTIN köşesine oturur:
+   desen 176 px, köşenin 62 px dışına taşıyor, dolayısıyla kart köşesi
+   desenin %35'inde (62/176). Oradan dışa doğru sönerek yok olur. */
+.desen-kose--su {
+  top: -62px; left: -62px;
+  -webkit-mask-image: radial-gradient(circle at 35% 35%, #000 0%, #000 24%, transparent 62%);
+  mask-image: radial-gradient(circle at 35% 35%, #000 0%, #000 24%, transparent 62%);
+}
+.desen-kose--sa {
+  top: -62px; right: -62px;
+  -webkit-mask-image: radial-gradient(circle at 65% 35%, #000 0%, #000 24%, transparent 62%);
+  mask-image: radial-gradient(circle at 65% 35%, #000 0%, #000 24%, transparent 62%);
+}
+.desen-kose--au {
+  bottom: -62px; left: -62px;
+  -webkit-mask-image: radial-gradient(circle at 35% 65%, #000 0%, #000 24%, transparent 62%);
+  mask-image: radial-gradient(circle at 35% 65%, #000 0%, #000 24%, transparent 62%);
+}
+.desen-kose--aa {
+  bottom: -62px; right: -62px;
+  -webkit-mask-image: radial-gradient(circle at 65% 65%, #000 0%, #000 24%, transparent 62%);
+  mask-image: radial-gradient(circle at 65% 65%, #000 0%, #000 24%, transparent 62%);
+}
 
 /* Koyu marka kartlarında biraz daha görünür durabilir */
-.card--dark .desen-kose { opacity: .2; }
+.card--dark .desen-kose { opacity: .15; }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Her köşe farklı hızda ve yönde döner: hepsi aynı anda aynı
-     açıda olursa mekanik görünür. */
-  .desen-kose--su { animation: desen-don 240s linear infinite; }
-  .desen-kose--sa { animation: desen-don 190s linear infinite reverse; }
-  .desen-kose--au { animation: desen-don 210s linear infinite reverse; }
-  .desen-kose--aa { animation: desen-don 265s linear infinite; }
+  /* Dönen İÇ katmandır; sönümleme yerinde kalır.
+     Her köşe farklı hızda: hepsi aynı sürede dönerse her an aynı
+     açıda olur ve mekanik görünür. */
+  .desen-kose--su .desen-kose__i { animation: desen-don 240s linear infinite; }
+  .desen-kose--sa .desen-kose__i { animation: desen-don 190s linear infinite reverse; }
+  .desen-kose--au .desen-kose__i { animation: desen-don 210s linear infinite reverse; }
+  .desen-kose--aa .desen-kose__i { animation: desen-don 265s linear infinite; }
 }
 @keyframes desen-don { to { transform: rotate(360deg); } }
 

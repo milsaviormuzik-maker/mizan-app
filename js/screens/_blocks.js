@@ -14,7 +14,7 @@ const isSaved = (ref) => state.quran.saved.includes(ref);
  *  Kartın `card--desenli` sınıfını alması gerekir (taşmayı kırpar). */
 export function desenKoseleri() {
   return ['su', 'sa', 'au', 'aa']
-    .map((k) => `<span class="desen-kose desen-kose--${k}" aria-hidden="true"></span>`)
+    .map((k) => `<span class="desen-kose desen-kose--${k}" aria-hidden="true"><span class="desen-kose__i"></span></span>`)
     .join('');
 }
 
