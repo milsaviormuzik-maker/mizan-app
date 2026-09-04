@@ -10,6 +10,7 @@ import { go } from '../core/router.js';
 import { SURAHS, JUZ, surahName, surahByNo, juzOf, MEALS } from '../data/quran-surahs.js';
 import { VERSES, verseAt, searchVerses } from '../data/quran-verses.js';
 import { segment, empty } from './_blocks.js';
+import { girihPanel } from '../core/motifs.js';
 import { openNote, openVerseMenu, sharedActions } from './_actions.js';
 
 const TABS = [
@@ -31,7 +32,8 @@ function resumeCard() {
   const { surah, ayah } = state.quran.lastRead;
   const s = surahByNo(surah);
   return `
-  <section class="card card--tap card--dark" data-act="resume" style="background:var(--navy)">
+  <section class="card card--tap card--dark" data-act="resume" style="background:var(--navy);overflow:hidden">
+    <span class="girih-panel">${girihPanel()}</span>
     <div class="row-between">
       <div class="grow">
         <span class="card__label" style="color:var(--gold)">Son kaldığın yer</span>

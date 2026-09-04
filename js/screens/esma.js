@@ -11,6 +11,7 @@ import { icon } from '../core/icons.js';
 import { back } from '../core/router.js';
 import { topbar, empty } from './_blocks.js';
 import { ESMA, ISM_I_ZAT, ESMA_KAYNAK, ESMA_AYETLER, searchEsma, esmaByNo } from '../data/esma.js';
+import { semse } from '../core/motifs.js';
 
 let arama = '';
 
@@ -22,8 +23,9 @@ export const esmaScreen = {
         <div class="scroll" data-scroll>
           <div class="screen__body pad-tabbar">
 
-            <section class="card" style="border-color:var(--gold-line)">
-              <span class="card__label" style="color:var(--gold-text)">İsm-i Zât</span>
+            <section class="card" style="border-color:var(--gold-line);overflow:hidden">
+              <span class="semse-arka">${semse(260, { donen: true })}</span>
+              <span class="card__label" style="color:var(--gold-text);position:relative">İsm-i Zât</span>
               <p class="arabic arabic--feature" dir="rtl" lang="ar"
                 style="font-size:40px;margin-top:14px">${ISM_I_ZAT.ar}</p>
               <p class="t-h2 t-center" style="margin-top:10px">${esc(ISM_I_ZAT.tr)}</p>
@@ -104,7 +106,10 @@ function acDetay(no) {
   const onceki = esmaByNo(no - 1);
   const sonraki = esmaByNo(no + 1);
   openSheet(`${no}. İsim`, `
-    <p class="arabic arabic--feature" dir="rtl" lang="ar" style="font-size:44px">${x.ar}</p>
+    <div style="position:relative;display:grid;place-items:center;min-height:158px">
+      <span class="semse-arka">${semse(200, { donen: true })}</span>
+      <p class="arabic arabic--feature" dir="rtl" lang="ar" style="font-size:44px;position:relative">${x.ar}</p>
+    </div>
     <div class="ornament" aria-hidden="true"><span class="ornament__mark"></span></div>
     <p class="t-h2 t-center">${esc(x.tr)}</p>
     <p class="t-body t-center" style="margin-top:10px;color:var(--ink-700)">${esc(x.mean)}</p>

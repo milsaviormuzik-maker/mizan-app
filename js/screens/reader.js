@@ -10,6 +10,7 @@ import { back } from '../core/router.js';
 import { SURAHS, surahByNo, juzOf, MEALS, RECITERS, ARABIC_FONTS, ayahAudioSources } from '../data/quran-surahs.js';
 import { VERSES } from '../data/quran-verses.js';
 import { openVerseMenu, openNote, intent } from './_actions.js';
+import { sureBasligi } from '../core/motifs.js';
 import * as player from '../core/player.js';
 import { empty, switchRow } from './_blocks.js';
 
@@ -49,11 +50,14 @@ function ayahHtml(surah, v) {
 function surahHead(s) {
   const showBasmala = s.no !== 1 && s.no !== 9;
   return `
-  <div style="text-align:center;padding:26px 0 8px">
-    <p class="arabic" style="text-align:center;font-size:30px;line-height:1.6">${s.ar}</p>
-    <p class="t-cap" style="margin-top:6px">${esc(s.meaning.toLocaleUpperCase('tr'))} · ${s.ayahs} ÂYET · ${esc(s.type.toLocaleUpperCase('tr'))}</p>
+  <div style="text-align:center;padding:22px 0 8px">
+    <div class="sure-bant">
+      ${sureBasligi()}
+      <span class="sure-bant__ad arabic" dir="rtl" lang="ar">${s.ar}</span>
+    </div>
+    <p class="t-cap">${esc(s.meaning.toLocaleUpperCase('tr'))} · ${s.ayahs} ÂYET · ${esc(s.type.toLocaleUpperCase('tr'))}</p>
     ${showBasmala ? `
-      <hr class="hairline" style="margin:18px auto;max-width:180px">
+      <div class="ornament" aria-hidden="true"><span class="ornament__mark"></span></div>
       <p class="arabic" style="text-align:center;font-size:24px;line-height:1.9">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>` : ''}
   </div>`;
 }
