@@ -8,16 +8,8 @@ import { icon } from '../core/icons.js';
 import { state, commit } from '../core/state.js';
 import { back } from '../core/router.js';
 import { topbar, switchRow } from './_blocks.js';
+import { ZIKIRS } from '../data/content.js';
 
-const ZIKIRS = [
-  { id: 'subhanallah', ar: 'سُبْحَانَ اللَّهِ', tr: 'Sübhânallah', meaning: 'Allah’ı her türlü eksiklikten tenzih ederim', target: 33 },
-  { id: 'elhamdulillah', ar: 'الْحَمْدُ لِلَّهِ', tr: 'Elhamdülillah', meaning: 'Hamd Allah’a mahsustur', target: 33 },
-  { id: 'allahuekber', ar: 'اللَّهُ أَكْبَرُ', tr: 'Allahu ekber', meaning: 'Allah en büyüktür', target: 33 },
-  { id: 'estagfirullah', ar: 'أَسْتَغْفِرُ اللَّهَ', tr: 'Estağfirullah', meaning: 'Allah’tan bağışlanma dilerim', target: 100 },
-  { id: 'lailahe', ar: 'لَا إِلَٰهَ إِلَّا اللَّهُ', tr: 'Lâ ilâhe illallah', meaning: 'Allah’tan başka ilâh yoktur', target: 100 },
-  { id: 'salavat', ar: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ', tr: 'Allahümme salli alâ Muhammed', meaning: 'Allah’ım! Muhammed’e salât eyle', target: 100 },
-  { id: 'havle', ar: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ', tr: 'Lâ havle velâ kuvvete illâ billâh', meaning: 'Güç ve kuvvet ancak Allah’tandır', target: 100 }
-];
 
 const zikirById = (id) =>
   ZIKIRS.find((z) => z.id === id) ??
@@ -41,6 +33,7 @@ export const tasbihScreen = {
               <p class="arabic" style="text-align:center;font-size:28px;line-height:1.9" data-z-ar>${z.ar}</p>
               <p class="t-h3" style="margin-top:6px" data-z-tr>${esc(z.tr)}</p>
               <p class="t-sec" style="margin-top:3px" data-z-mean>${esc(z.meaning)}</p>
+              <p class="source" style="margin-top:9px" data-z-src>${esc(z.src ?? "Kendi eklediğin zikir")}</p>
               <span class="chip" style="margin-top:14px">${icon('chevron', 14)} Zikri değiştir</span>
             </button>
 
@@ -169,6 +162,7 @@ function openZikrPicker(root) {
       $('[data-z-ar]', root).textContent = z.ar;
       $('[data-z-tr]', root).textContent = z.tr;
       $('[data-z-mean]', root).textContent = z.meaning;
+      $('[data-z-src]', root).textContent = z.src ?? 'Kendi eklediğin zikir';
       paint(root);
       closeSheet();
     }

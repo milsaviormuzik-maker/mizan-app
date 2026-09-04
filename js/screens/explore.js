@@ -364,6 +364,7 @@ export const hajjScreen = {
                   <ul class="step__points">
                     ${s.points.map((p) => `<li>${esc(p)}</li>`).join('')}
                   </ul>
+                  <p class="source" style="margin-top:10px">${s.sources.map(esc).join(' · ')}</p>
                   ${s.dua ? `<button class="chip" style="margin-top:12px" data-act="dua" data-id="${s.dua}">
                     ${icon('save', 15)} ${esc(duaById(s.dua)?.title ?? 'Dua')}</button>` : ''}
                 </div>`).join('')}

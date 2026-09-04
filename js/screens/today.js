@@ -335,6 +335,7 @@ function openMinute(id) {
   const article = card.link ? infoById(card.link) : null;
   openSheet(card.q, `
     <p class="t-body">${esc(card.a)}</p>
+    <p class="source" style="margin-top:12px">${esc(card.src)}</p>
     ${article ? `
       <hr class="hairline" style="margin:20px 0">
       <p class="card__label">Detaylı bilgi</p>

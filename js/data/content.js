@@ -507,34 +507,42 @@ export const infoById = (id) => INFO_ARTICLES.find((x) => x.id === id);
 /* ============================================================
    HAC & UMRE REHBERİ
    ============================================================ */
+/* Her adım kaynağıyla birlikte tutulur: rehber, kaynaksız hüküm anlatmaz. */
 export const HAJJ_STEPS = [
   { id: 'ihram', no: 1, name: 'İhram', when: 'Mîkat sınırında',
+    sources: ['Bakara 197', 'Buhârî, Hac 9 (Mevâkît)', 'Diyanet İşleri Başkanlığı, İlmihal — Hac ve Umre'],
     desc: 'Hac veya umreye niyet ederek ihrama girilir. Erkekler dikişsiz iki parça beyaz kumaş giyer; kadınlar günlük kıyafetlerini korur.',
     points: ['Gusül alınır veya abdest alınır', 'İki rekât ihram namazı kılınır', 'Niyet edilir ve telbiye getirilir',
       'İhram yasakları başlar: tıraş olmak, koku sürünmek, tırnak kesmek, avlanmak, nikâh kıymak'],
     dua: 'hac-1' },
   { id: 'tavaf', no: 2, name: 'Tavaf', when: 'Mescid-i Haram’da',
+    sources: ['Bakara 125', 'Hac 29', 'Buhârî, Hac 60', 'Müslim, Hac 147'],
     desc: 'Kâbe’nin etrafında Hacerü’l-Esved hizasından başlayarak yedi kez dönülür.',
     points: ['Hacerü’l-Esved hizasında "Bismillâhi Allâhü ekber" denir', 'Kâbe sol tarafta kalacak şekilde dönülür',
       'İlk üç şavtta erkekler hızlı adımlarla yürür (remel)', 'Tavaf sonunda Makam-ı İbrâhim arkasında iki rekât namaz kılınır'] },
   { id: 'say', no: 3, name: 'Sa’y', when: 'Safâ ve Merve arasında',
+    sources: ['Bakara 158', 'Buhârî, Hac 79', 'Müslim, Hac 259'],
     desc: 'Safâ tepesinden başlayıp Merve’de biten dört gidiş üç geliş, toplam yedi şavttır.',
     points: ['Safâ’dan başlanır, Merve’de bitirilir', 'İki yeşil direk arasında erkekler hızlı yürür (hervele)',
       'Her şavtta dua edilir', 'Sa’y bittikten sonra umrede tıraş olunur ve ihramdan çıkılır'],
     dua: 'hac-2' },
   { id: 'arafat', no: 4, name: 'Arafat Vakfesi', when: 'Zilhicce 9 · öğleden gün batımına',
+    sources: ['Bakara 198', 'Ebû Dâvûd, Menâsik 68', 'Tirmizî, Hac 57', 'Nesâî, Menâsik 203'],
     desc: 'Haccın en temel rüknüdür. Arafat’ta bulunmadan hac tamamlanmaz.',
     points: ['Öğle ve ikindi namazı birleştirilerek kılınır', 'Gün batımına kadar dua, zikir ve tövbe ile geçirilir',
       'Güneş batmadan Arafat’tan ayrılınmaz', '"Hac Arafat’tır" hadisi bu rüknün önemini belirtir'] },
   { id: 'muzdelife', no: 5, name: 'Müzdelife', when: 'Arafat sonrası gece',
+    sources: ['Bakara 198', 'Buhârî, Hac 96', 'Müslim, Hac 266'],
     desc: 'Güneş battıktan sonra Müzdelife’ye geçilir, gece burada geçirilir.',
     points: ['Akşam ve yatsı namazı birleştirilerek yatsı vaktinde kılınır', 'Şeytan taşlamak için taşlar toplanır',
       'Fecirden sonra vakfe yapılır', 'Güneş doğmadan Mina’ya hareket edilir'] },
   { id: 'mina', no: 6, name: 'Mina — Şeytan Taşlama ve Kurban', when: 'Zilhicce 10–13',
+    sources: ['Hac 28', 'Kevser 2', 'Buhârî, Hac 132', 'Müslim, Hac 314'],
     desc: 'Büyük cemreye yedi taş atılır, ardından kurban kesilir ve tıraş olunarak ihramdan çıkılır.',
     points: ['Bayramın 1. günü sadece büyük cemre (Akabe) taşlanır', 'Kurban kesilir', 'Saç tıraşı ile ihramdan çıkılır',
       'Ziyaret tavafı yapılır', 'Bayramın 2., 3. ve 4. günleri üç cemre de taşlanır'] },
   { id: 'veda', no: 7, name: 'Veda Tavafı', when: 'Mekke’den ayrılırken',
+    sources: ['Buhârî, Hac 144', 'Müslim, Hac 379', 'Diyanet İşleri Başkanlığı, İlmihal — Hac ve Umre'],
     desc: 'Mekke’den ayrılmadan önce yapılan son tavaftır.',
     points: ['Âfâkî (dışarıdan gelen) hacılar için vâciptir', 'Yedi şavt tavaf yapılır',
       'Tavaf namazı kılınır', 'Mültezem’de dua edilir'] }
@@ -543,19 +551,33 @@ export const HAJJ_STEPS = [
 /* ============================================================
    1 DAKİKADA ÖĞREN — günlük kısa bilgi kartları
    ============================================================ */
+/* Kısa kartlar da kaynaksız kalmaz: kart tek başına paylaşılabildiği için
+   bağlantı verdiği yazının künyesine güvenilemez, kendi künyesi bulunur. */
 export const MINUTE_CARDS = [
-  { id: 'm1', q: 'Seferîlik nedir?', a: 'İkamet ettiğin yerden 90 km ve daha uzağa gittiğinde seferî olursun. Öğle, ikindi ve yatsının farzları iki rekât kılınır. Sabah ve akşam kısaltılmaz.', link: 'seferilik' },
-  { id: 'm2', q: 'Vitir namazı nasıl kılınır?', a: 'Yatsıdan sonra üç rekât kılınır. Üçüncü rekâtta zamm-ı sûreden sonra tekbir alınır ve kunut duaları okunur.', link: 'vitir' },
-  { id: 'm3', q: 'Sadaka ile zekât arasındaki fark nedir?', a: 'Zekât farzdır; nisap, oran ve verilecek kişiler bellidir. Sadaka gönüllüdür; miktarı ve zamanı serbesttir.', link: 'zekat-sadaka' },
-  { id: 'm4', q: 'Kaza namazı nasıl kılınır?', a: 'Vaktinde kılınan farzla aynıdır, sadece niyet farklıdır. Kerahet vakitleri dışında her zaman kılınabilir.', link: 'kaza-namazi' },
-  { id: 'm5', q: 'Kerahet vakti ne demek?', a: 'Güneşin doğuşu, tam tepede olduğu an ve batışı sırasındaki kısa sürelerdir. Bu vakitlerde nafile namaz kılınmaz.', link: null },
-  { id: 'm6', q: 'Fitre ne zaman verilir?', a: 'Ramazan boyunca verilebilir; en geç bayram namazından önce ödenmesi uygundur.', link: 'fitre' },
-  { id: 'm7', q: 'Teravih kaç rekâttır?', a: 'Yaygın uygulama yirmi rekâttır. Sekiz rekât kılındığına dair rivayetler de vardır. Cemaatle kılınması sünnettir.', link: 'teravih' },
-  { id: 'm8', q: 'Zekât nisabı nedir?', a: '80,18 gram altın veya 561 gram gümüş değerinde mala, üzerinden bir kamerî yıl geçmiş olarak sahip olmaktır.', link: 'zekat-nisap' },
-  { id: 'm9', q: 'Cuma günü ne okunur?', a: 'Kehf sûresini okumak sünnet olarak tavsiye edilmiştir. Ayrıca salavat getirmek de tavsiye edilir.', link: 'cuma' },
-  { id: 'm10', q: 'Gusül abdestinin farzları nelerdir?', a: 'Hanefî mezhebine göre üçtür: ağza su vermek, buruna su vermek ve bütün bedeni yıkamak.', link: 'gusul' },
-  { id: 'm11', q: 'Orucu neler bozmaz?', a: 'Unutarak yiyip içmek, istem dışı kusmak, yutmamak şartıyla diş fırçalamak, kan aldırmak ve gusletmek orucu bozmaz.', link: 'oruc-bozan' },
-  { id: 'm12', q: 'Abdesti ne bozar?', a: 'Ön ve arka yoldan çıkanlar, ağız dolusu kusmak, bilinç kaybı ve namazda sesli gülmek abdesti bozar.', link: 'abdest-bozan' }
+  { id: 'm1', q: 'Seferîlik nedir?', a: 'İkamet ettiğin yerden 90 km ve daha uzağa gittiğinde seferî olursun. Öğle, ikindi ve yatsının farzları iki rekât kılınır. Sabah ve akşam kısaltılmaz.', link: 'seferilik',
+    src: 'Nisâ 101; Diyanet İşleri Başkanlığı, İlmihal — Seferîlik' },
+  { id: 'm2', q: 'Vitir namazı nasıl kılınır?', a: 'Yatsıdan sonra üç rekât kılınır. Üçüncü rekâtta zamm-ı sûreden sonra tekbir alınır ve kunut duaları okunur.', link: 'vitir',
+    src: 'Ebû Dâvûd, Vitir 1; Diyanet İşleri Başkanlığı, İlmihal — Vitir Namazı' },
+  { id: 'm3', q: 'Sadaka ile zekât arasındaki fark nedir?', a: 'Zekât farzdır; nisap, oran ve verilecek kişiler bellidir. Sadaka gönüllüdür; miktarı ve zamanı serbesttir.', link: 'zekat-sadaka',
+    src: 'Tevbe 60; Diyanet İşleri Başkanlığı, İlmihal — Zekât' },
+  { id: 'm4', q: 'Kaza namazı nasıl kılınır?', a: 'Vaktinde kılınan farzla aynıdır, sadece niyet farklıdır. Kerahet vakitleri dışında her zaman kılınabilir.', link: 'kaza-namazi',
+    src: 'Buhârî, Mevâkît 37; Diyanet İşleri Başkanlığı, İlmihal — Kaza Namazı' },
+  { id: 'm5', q: 'Kerahet vakti ne demek?', a: 'Güneşin doğuşu, tam tepede olduğu an ve batışı sırasındaki kısa sürelerdir. Bu vakitlerde nafile namaz kılınmaz.', link: 'kaza-namazi',
+    src: 'Müslim, Müsâfirîn 293; Diyanet İşleri Başkanlığı, İlmihal — Namaz Vakitleri' },
+  { id: 'm6', q: 'Fitre ne zaman verilir?', a: 'Ramazan boyunca verilebilir; en geç bayram namazından önce ödenmesi uygundur.', link: 'fitre',
+    src: 'Buhârî, Zekât 76; Ebû Dâvûd, Zekât 17' },
+  { id: 'm7', q: 'Teravih kaç rekâttır?', a: 'Yaygın uygulama yirmi rekâttır. Sekiz rekât kılındığına dair rivayetler de vardır. Cemaatle kılınması sünnettir.', link: 'teravih',
+    src: 'Buhârî, Terâvih 1; Diyanet İşleri Başkanlığı, İlmihal — Teravih' },
+  { id: 'm8', q: 'Zekât nisabı nedir?', a: '80,18 gram altın veya 561 gram gümüş değerinde mala, üzerinden bir kamerî yıl geçmiş olarak sahip olmaktır.', link: 'zekat-nisap',
+    src: 'Tevbe 34; Diyanet İşleri Başkanlığı, İlmihal — Zekât Nisabı' },
+  { id: 'm9', q: 'Cuma günü ne okunur?', a: 'Kehf sûresini okumak sünnet olarak tavsiye edilmiştir. Ayrıca salavat getirmek de tavsiye edilir.', link: 'cuma',
+    src: 'Beyhakî, Şuabü’l-îmân (Kehf); Ebû Dâvûd, Salât 201 (salavat)' },
+  { id: 'm10', q: 'Gusül abdestinin farzları nelerdir?', a: 'Hanefî mezhebine göre üçtür: ağza su vermek, buruna su vermek ve bütün bedeni yıkamak.', link: 'gusul',
+    src: 'Mâide 6; Diyanet İşleri Başkanlığı, İlmihal — Gusül' },
+  { id: 'm11', q: 'Orucu neler bozmaz?', a: 'Unutarak yiyip içmek, istem dışı kusmak, yutmamak şartıyla diş fırçalamak, kan aldırmak ve gusletmek orucu bozmaz.', link: 'oruc-bozan',
+    src: 'Buhârî, Savm 26; Ebû Dâvûd, Savm 33; DİB Din İşleri Yüksek Kurulu, Oruç fetvaları' },
+  { id: 'm12', q: 'Abdesti ne bozar?', a: 'Ön ve arka yoldan çıkanlar, ağız dolusu kusmak, bilinç kaybı ve namazda sesli gülmek abdesti bozar.', link: 'abdest-bozan',
+    src: 'Mâide 6; Diyanet İşleri Başkanlığı, İlmihal — Abdesti Bozan Durumlar' }
 ];
 
 /* ============================================================
@@ -602,3 +624,25 @@ export const ASK_ANSWERS = {
 export const ASK_DISCLAIMER =
   'Mizan Sor, güvenilir kaynaklardan derlenen bilgileri aktarır; fetva vermez. ' +
   'Kişisel durumunla ilgili bağlayıcı bir karar gerekiyorsa bir din görevlisine veya uzmanına danışman daha doğru olur.';
+
+
+/* ============================================================
+   ZİKİRLER — dijital tesbih
+   ============================================================ */
+/* Namaz sonrası 33'er tesbihin dayanağı Ebû Hüreyre rivayetidir; hedef
+   sayılar uydurulmuş değil, kaynağıyla birlikte tutulur. */
+const TESBIHAT_KAYNAK = 'Müslim, Mesâcid 146; Buhârî, Ezân 155';
+
+export const ZIKIRS = [
+  { id: 'subhanallah', ar: 'سُبْحَانَ اللَّهِ', tr: 'Sübhânallah', meaning: 'Allah’ı her türlü eksiklikten tenzih ederim', target: 33, src: TESBIHAT_KAYNAK },
+  { id: 'elhamdulillah', ar: 'الْحَمْدُ لِلَّهِ', tr: 'Elhamdülillah', meaning: 'Hamd Allah’a mahsustur', target: 33, src: TESBIHAT_KAYNAK },
+  { id: 'allahuekber', ar: 'اللَّهُ أَكْبَرُ', tr: 'Allahu ekber', meaning: 'Allah en büyüktür', target: 33, src: TESBIHAT_KAYNAK },
+  { id: 'estagfirullah', ar: 'أَسْتَغْفِرُ اللَّهَ', tr: 'Estağfirullah', meaning: 'Allah’tan bağışlanma dilerim', target: 100,
+    src: 'Müslim, Zikir 41 — günde yüz kez istiğfar edildiği rivayet edilir' },
+  { id: 'lailahe', ar: 'لَا إِلَٰهَ إِلَّا اللَّهُ', tr: 'Lâ ilâhe illallah', meaning: 'Allah’tan başka ilâh yoktur', target: 100,
+    src: 'Buhârî, Daavât 65; Müslim, Zikir 28 — günde yüz kez söylenmesi rivayet edilir' },
+  { id: 'salavat', ar: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ', tr: 'Allahümme salli alâ Muhammed', meaning: 'Allah’ım! Muhammed’e salât eyle', target: 100,
+    src: 'Ahzâb 56; Müslim, Salât 70 — sayı rivayetle değil, yaygın uygulamayla belirlenmiştir' },
+  { id: 'havle', ar: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ', tr: 'Lâ havle velâ kuvvete illâ billâh', meaning: 'Güç ve kuvvet ancak Allah’tandır', target: 100,
+    src: 'Buhârî, Daavât 50; Müslim, Zikir 44 — sayı rivayetle değil, yaygın uygulamayla belirlenmiştir' }
+];
