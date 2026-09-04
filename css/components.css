@@ -285,10 +285,12 @@
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 70;
   max-height: 86%;
   display: flex; flex-direction: column;
-  background: var(--surface);
+  /* Örten bir yüzeydir: --surface saç teli sistemi için neredeyse şeffaftır,
+     burada arkadaki ekranı okutur. Zeminin opak hâli kullanılır. */
+  background: var(--bg);
   border-radius: var(--r-xl) var(--r-xl) 0 0;
   box-shadow: var(--shadow-sheet);
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-strong);
   transform: translateY(100%);
   visibility: hidden;
   pointer-events: none;
@@ -519,49 +521,38 @@
 .ring__fill { fill: none; stroke: var(--gold); stroke-linecap: round; transition: stroke-dashoffset 900ms var(--ease); }
 .atmos .ring__fill { stroke: var(--atmos-accent); }
 
-/* ---------------- Marka kilitlemesi ----------------
-   PNG lacivert + altın; koyu zeminde okunurluk için hafifçe açılır. */
-.brand-mark {
-  height: auto;
-  margin: 0 auto;
-  display: block;
+/* ---------------- Marka görselleri ----------------
+   Markanın koyu (lacivert gövde) ve açık (fildişi gövde) iki sürümü vardır.
+   Hangisinin çizileceğini görselin ÜZERİNDE DURDUĞU zemin belirler; adres
+   CSS değişkeninden gelir, app.js temaya göre yazar. Görsel `contain` ile
+   yerleştiği için kutu oranı tam tutmasa da hiçbir sürüm kırpılmaz. */
+.brand-mark,
+.brand-lockup {
+  display: inline-block;
+  vertical-align: middle;
+  flex: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   user-select: none;
   -webkit-user-drag: none;
 }
-:root[data-theme="dark"] .brand-mark { filter: brightness(1.32) saturate(1.06); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .brand-mark {
-    filter: brightness(1.32) saturate(1.06);
-  }
-}
-/* Amblem — aynı PNG'den kelime markası kırpılarak alınır.
-   Oranlar 1254×1254 kaynaktaki işaretin konumuna göre hesaplanmıştır. */
-.brand-emblem {
-  position: relative;
-  display: block;
-  flex: none;
-  overflow: hidden;
-  border-radius: 50%;
-  background: var(--surface-2);
-}
-.brand-emblem img {
-  position: absolute;
-  width: 188%;
-  max-width: none;
-  left: -44%;
-  top: -7%;
-}
-:root[data-theme="dark"] .brand-emblem img { filter: brightness(1.32) saturate(1.06); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .brand-emblem img {
-    filter: brightness(1.32) saturate(1.06);
-  }
-}
+.brand-mark   { aspect-ratio: 182 / 256; background-image: var(--marka-isaret); }
+.brand-lockup { aspect-ratio: 488 / 512; background-image: var(--marka-kilit); }
 
-/* Açılış ekranı zaten lacivert zemin üzerinde */
-.onb__brand .brand-mark {
-  filter: brightness(1.5) saturate(1.05)
-    drop-shadow(0 0 26px rgba(200, 165, 87, .22));
+/* Zemini temadan bağımsız olan yerler: açılış ekranı, lacivert kartlar,
+   widget önizlemeleri. Tema ne olursa olsun doğru sürüm çizilir. */
+.brand-mark--koyu-zemin   { background-image: var(--marka-isaret-acik); }
+.brand-mark--acik-zemin   { background-image: var(--marka-isaret-koyu); }
+.brand-lockup--koyu-zemin { background-image: var(--marka-kilit-acik); }
+.brand-lockup--acik-zemin { background-image: var(--marka-kilit-koyu); }
+
+/* Profil avatarı — işaret altın saç teli bir halkanın içinde durur */
+.avatar {
+  width: 54px; height: 54px; flex: none;
+  display: grid; place-items: center;
+  border-radius: var(--r-full);
+  border: 1px solid var(--gold-line);
 }
 
 /* ============================================================

@@ -3,6 +3,7 @@
    ============================================================ */
 
 import { PRAYER_NAMES, SALAH_NAMES } from './astro.js';
+import { state } from './state.js';
 
 /* ------------------------------------------------------------
    DOM
@@ -199,9 +200,11 @@ export function atmosPhaseFor(currentKey, progress = 0) {
 }
 
 export function applyAtmosphere(phase) {
-  const isDark = document.documentElement.dataset.theme === 'dark' ||
-    (!document.documentElement.dataset.theme &&
-      matchMedia('(prefers-color-scheme: dark)').matches);
+  // Kök öznitelik yerine durumdan okunur: tema değiştiğinde abonelerin
+  // sırası özniteliği bir adım geride bırakabiliyor.
+  const t = state.app.theme;
+  const isDark = t === 'dark' ||
+    (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
   const spec = ATMOS[phase] || ATMOS.gece;
   const [a, b] = isDark ? spec.dark : spec.light;
 

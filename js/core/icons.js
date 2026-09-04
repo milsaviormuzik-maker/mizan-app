@@ -78,50 +78,47 @@ export function icon(name, size = 22, extra = '') {
 }
 
 /* ------------------------------------------------------------
-   MİZAN LOGOSU
-   Marka işaretinin çizgi karşılığı: hilal · sivri kemer ·
-   dört köşeli yıldız · iki kefe ve kaide.
-   Küçük boyutlarda okunması için tek çizgi kalınlığında çizilir;
-   altın detaylar `accent` ile ayrılır.
-   Tam kilitleme (işaret + kelime markası) için `logoMark()` kullanılır.
+   MİZAN MARKASI
+   Markanın kendi görselleri kullanılır; çizilmiş bir karşılığı yoktur.
+   Her görselin iki sürümü vardır ve seçimi ZEMİN belirler:
+     · koyu sürüm  — lacivert gövde  → AÇIK zeminde okunur
+     · açık sürüm  — fildişi gövde   → KOYU zeminde okunur
+   Her sürümün ayrıca "işaret" (yalnız amblem) ve "kilitleme"
+   (işaret + Mizan yazısı) hâli vardır.
+
+   Görsel adresi doğrudan yazılmaz; CSS değişkeninden gelir (app.js
+   temaya göre yazar). Böylece tema değişince hiçbir ekranın yeniden
+   çizilmesi gerekmez.
    ------------------------------------------------------------ */
-export function logo(size = 26, color = 'currentColor', accent = null) {
-  const gold = accent ?? color;
-  return `<svg viewBox="0 0 32 32" width="${size}" height="${size}" fill="none"
-    stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"
-    aria-hidden="true">
-    <path d="M17.6 0.4a2.4 2.4 0 1 0 .1 4.7 1.9 1.9 0 1 1-.1-4.7z" fill="${gold}" stroke="none"/>
-    <path d="M5.7 28.4V18C5.7 12.4 9.7 8.2 16 4.4c6.3 3.8 10.3 8 10.3 13.6v10.4"/>
-    <path d="M10 28.4v-9.3c0-4 2.2-6.9 6-9.6 3.8 2.7 6 5.6 6 9.6v9.3" opacity=".42"/>
-    <path d="M16 11.2l1.05 2.35L19.4 14.6l-2.35 1.05L16 18l-1.05-2.35L12.6 14.6l2.35-1.05z"
-      fill="${gold}" stroke="none"/>
-    <path d="M16 24.6c-1.9-2.1-4.6-3.2-7.5-3.2 1.4 2 4.1 3.2 7.5 3.2" stroke="${gold}"/>
-    <path d="M16 24.6c1.9-2.1 4.6-3.2 7.5-3.2-1.4 2-4.1 3.2-7.5 3.2" stroke="${gold}"/>
-    <path d="M12.5 25.3h7a3.5 3.5 0 0 1-7 0z" stroke="${gold}"/>
-  </svg>`;
-}
 
 /* Marka görsellerinin TEK kaynağı. Paketleyici bu değerleri data URI ile
-   değiştirir; tek dosya derlemesinde görseller bir kez gömülür. */
-export const LOGO_SRC = 'assets/logo.png';
+   değiştirir; tek dosya derlemesinde her görsel bir kez gömülür. */
+export const MARK_KOYU_SRC = 'assets/mark-koyu.png';
+export const MARK_ACIK_SRC = 'assets/mark-acik.png';
+export const LOGO_KOYU_SRC = 'assets/logo-koyu.png';
+export const LOGO_ACIK_SRC = 'assets/logo-acik.png';
 export const DESEN_SRC = 'assets/desen.png';
 
-/** Tam marka kilitlemesi — yalnızca yer olan yerlerde (açılış, hakkımızda) */
-export function logoMark(width = 180, alt = 'Mizan') {
-  return `<img class="brand-mark" src="${LOGO_SRC}" alt="${alt}"
-    style="width:${width}px" width="${width}">`;
+/* `zemin` seçeneği görselin ÜZERİNDE DURDUĞU zemini söyler:
+   'tema' → sayfa temasını izler (varsayılan)
+   'koyu' → koyu bir zeminin üstünde (lacivert kart, açılış, widget)
+   'acik' → açık bir zeminin üstünde */
+const zeminSinifi = (zemin, taban) =>
+  zemin === 'koyu' ? ` ${taban}--koyu-zemin`
+  : zemin === 'acik' ? ` ${taban}--acik-zemin`
+  : '';
+
+/** Marka işareti — kelime markası olmadan yalnızca amblem. */
+export function mark(size = 26, { zemin = 'tema', alt = '' } = {}) {
+  const erisim = alt ? `role="img" aria-label="${alt}"` : 'aria-hidden="true"';
+  return `<span class="brand-mark${zeminSinifi(zemin, 'brand-mark')}"
+    style="width:${size}px" ${erisim}></span>`;
 }
 
-/**
- * Marka amblemi — kelime markası olmadan, yalnızca işaret.
- * Ayrı dosya üretmeden aynı PNG'den CSS ile kırpılır; 40 px ve üstünde nettir.
- * Daha küçük boyutlarda `logo()` çizgi işareti kullanılmalıdır.
- */
-export function logoEmblem(size = 52, alt = '') {
-  return `<span class="brand-emblem" style="width:${size}px;height:${size}px"
-    ${alt ? `role="img" aria-label="${alt}"` : 'aria-hidden="true"'}>
-    <img src="${LOGO_SRC}" alt="">
-  </span>`;
+/** Tam marka kilitlemesi (işaret + Mizan yazısı) — yalnızca yer olan yerlerde. */
+export function lockup(width = 200, { zemin = 'tema', alt = 'Mizan' } = {}) {
+  return `<span class="brand-lockup${zeminSinifi(zemin, 'brand-lockup')}"
+    style="width:${width}px" role="img" aria-label="${alt}"></span>`;
 }
 
 /* ------------------------------------------------------------

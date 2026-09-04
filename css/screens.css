@@ -206,18 +206,15 @@
   display: flex; flex-direction: column; align-items: center;
   text-align: center;
 }
-.onb__mark { display: block; filter: drop-shadow(0 6px 26px rgba(0,0,0,.5)); }
-.onb__name {
-  font-family: var(--font-display);
-  font-size: 56px; font-weight: 400;
-  letter-spacing: .06em;
-  line-height: 1;
-  margin-top: 22px;
-  color: #F3EADA;
+/* Kilitleme markanın kendi görselidir; "Mizan" yazısı görselin içinde.
+   Koyu zeminde durduğu için daima açık sürüm çizilir. */
+.onb__logo {
+  display: block;
+  filter: drop-shadow(0 10px 34px rgba(0, 0, 0, .55));
 }
 .onb__rule {
   display: block; width: 132px; height: 1px;
-  margin: 22px 0 18px;
+  margin: 26px 0 18px;
   background: linear-gradient(to right, transparent, rgba(201,169,97,.95) 50%, transparent);
 }
 .onb__tag {
@@ -231,10 +228,9 @@
 /* Açılış sırası — sırayla, sakin */
 @media (prefers-reduced-motion: no-preference) {
   .onb__medallion { animation: onb-medallion 2200ms var(--ease-soft) both; }
-  .onb__mark      { animation: onb-rise 900ms var(--ease) 120ms both; }
-  .onb__name      { animation: onb-rise 900ms var(--ease) 300ms both; }
+  .onb__logo      { animation: onb-logo 1100ms var(--ease-soft) 120ms both; }
   .onb__rule      { animation: onb-rule 800ms var(--ease) 620ms both; }
-  .onb__tag       { animation: onb-rise 900ms var(--ease) 760ms both; }
+  .onb__tag       { animation: onb-rise 900ms var(--ease) 780ms both; }
   .onb__cta       { animation: onb-rise 900ms var(--ease) 980ms both; }
 }
 @keyframes onb-medallion {
@@ -243,6 +239,11 @@
 }
 @keyframes onb-rise {
   from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+/* Marka biraz büyüyerek yerleşir — belirmek değil, oturmak gibi */
+@keyframes onb-logo {
+  from { opacity: 0; transform: translateY(18px) scale(.94); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes onb-rule {

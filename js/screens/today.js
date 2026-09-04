@@ -5,7 +5,7 @@
    ============================================================ */
 
 import { el, $, $$, esc, hhmm, hms, trDate, trDayName, relativeDays, openSheet, closeSheet, toast, ringSvg, applyAtmosphere } from '../core/ui.js';
-import { icon, logo } from '../core/icons.js';
+import { icon, mark } from '../core/icons.js';
 import { state, commit, CITIES } from '../core/state.js';
 import { subscribeClock, invalidate } from '../core/clock.js';
 import { PRAYER_KEYS, PRAYER_NAMES, SALAH_NAMES } from '../core/astro.js';
@@ -29,7 +29,7 @@ function headerHtml(ctx) {
   <header class="atmos" data-atmos>
     <div class="row-between" style="position:relative">
       <div class="row gap-10">
-        <span style="display:grid;place-items:center;opacity:.92">${logo(30, 'currentColor', 'var(--atmos-accent)')}</span>
+        ${mark(34)}
         <span class="wordmark">Mizan</span>
       </div>
       <button class="row gap-7 pressable" data-act="pick-city"

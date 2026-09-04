@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { el, $, $$, esc, toast } from '../core/ui.js';
-import { icon, logo, logoMark } from '../core/icons.js';
+import { icon, lockup } from '../core/icons.js';
 import { state, commit, CITIES } from '../core/state.js';
 import { invalidate } from '../core/clock.js';
 import { PRAYER_KEYS, PRAYER_NAMES } from '../core/astro.js';
@@ -23,8 +23,7 @@ export function mountOnboarding(host, done) {
         <div class="onb__brand">
           <div class="onb__medallion" aria-hidden="true"></div>
           <div class="onb__lockup">
-            <span class="onb__mark">${logo(96, '#EDE3D0', '#C9A961')}</span>
-            <p class="onb__name">Mizan</p>
+            <span class="onb__logo">${lockup(232, { zemin: 'koyu' })}</span>
             <span class="onb__rule" aria-hidden="true"></span>
             <p class="onb__tag">Günün, ibadetin, dengen.</p>
           </div>
@@ -138,7 +137,11 @@ export function mountOnboarding(host, done) {
       state.user.city = c.name;
       state.user.coords = { lat: c.lat, lng: c.lng };
       commit('city'); invalidate();
-      goStep(node, 2);
+      // Tik önce görünür, sonra geçilir: dokunuşun karşılık verdiği anlaşılsın
+      $$('[data-act="city"] [data-check]', node).forEach((x) => { x.innerHTML = ''; });
+      n.querySelector('[data-check]').innerHTML =
+        `<span style="color:var(--gold-text)">${icon('check', 18)}</span>`;
+      setTimeout(() => goStep(node, 2), 260);
       return;
     }
     if (act === 'toggle-notify') {
@@ -176,9 +179,11 @@ function goStep(node, i) {
 function showCities(node) {
   const box = $('[data-cities]', node);
   box.style.display = 'block';
+  // Hiçbir şehir önceden işaretlenmez. İstanbul varsayılan olduğu için tikli
+  // görünüyor, kullanıcı da seçim yapmadan devam etmeye çalışıyordu.
   box.innerHTML = CITIES.map((c) => `
     <button class="row-item" data-act="city" data-city="${esc(c.name)}">
       <span class="row-item__main"><span class="row-item__title">${esc(c.name)}</span></span>
-      ${c.name === state.user.city ? `<span style="color:var(--gold-text)">${icon('check', 18)}</span>` : ''}
+      <span data-check></span>
     </button>`).join('');
 }

@@ -5,7 +5,7 @@
    ============================================================ */
 
 import { el, $, esc, hhmm, hms, humanLeft, trDate, ringSvg } from '../core/ui.js';
-import { icon, logo } from '../core/icons.js';
+import { icon, mark } from '../core/icons.js';
 import { state } from '../core/state.js';
 import { subscribeClock } from '../core/clock.js';
 import { PRAYER_KEYS, PRAYER_NAMES, SALAH_NAMES } from '../core/astro.js';
@@ -62,7 +62,7 @@ function paint(root, ctx) {
           <div class="girih-layer girih-layer--sm"></div>
           <div style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:space-between">
             <div class="row-between">
-              <span style="opacity:.85">${logo(15, '#F6F2E9', '#D9BA6E')}</span>
+              ${mark(18, { zemin: 'koyu' })}
               <span style="position:relative;color:#F6F2E9">
                 ${ringSvg(ctx.progress, 26, 2.5)}
               </span>
@@ -98,7 +98,7 @@ function paint(root, ctx) {
       <div class="wg__frame">
         <div class="row-between" style="margin-bottom:14px">
           <div class="row gap-6">
-            <span style="color:var(--gold)">${logo(15, 'currentColor')}</span>
+            ${mark(16)}
             <span style="font-size:12px;font-weight:600">${esc(state.user.city)}</span>
           </div>
           <span class="t-cap">${ctx.hijri.day} ${ctx.hijri.monthName.toLocaleUpperCase('tr')}</span>
@@ -156,7 +156,7 @@ function paint(root, ctx) {
       <div class="row gap-12" style="margin-top:18px;align-items:center">
         <span style="position:relative;color:#F6F2E9;flex:none">
           ${ringSvg(ctx.progress, 42, 3)}
-          <span style="position:absolute;inset:0;display:grid;place-items:center;color:#D9BA6E">${logo(15, 'currentColor')}</span>
+          <span style="position:absolute;inset:0;display:grid;place-items:center">${mark(17, { zemin: 'koyu' })}</span>
         </span>
         <div class="grow" style="padding:9px 12px;background:rgba(255,255,255,.1);border-radius:14px">
           <p style="font-size:10.5px;font-weight:600;letter-spacing:.12em;color:#D9BA6E">${esc(nextName.toLocaleUpperCase('tr'))}</p>

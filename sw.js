@@ -9,7 +9,7 @@
    eder. Ses için bağlantı gerekir; oynatıcı bunu zaten söylüyor.
    ============================================================ */
 
-const VERSION = 'mizan-v1';
+const VERSION = 'mizan-v2';
 const SHELL = [
   './',
   './index.html',
@@ -18,7 +18,11 @@ const SHELL = [
   './css/base.css',
   './css/components.css',
   './css/screens.css',
-  './assets/logo.png',
+  './assets/mark-koyu.png',
+  './assets/mark-acik.png',
+  './assets/logo-koyu.png',
+  './assets/logo-acik.png',
+  './assets/desen.png',
   './assets/icon.svg',
   './js/app.js'
 ];

@@ -4,7 +4,10 @@
    ============================================================ */
 
 import { $, initSheet, initToast, applyAtmosphere, closeSheet } from './core/ui.js';
-import { icon, girihDataUri, girihStarUri, DESEN_SRC } from './core/icons.js';
+import {
+  icon, girihDataUri, girihStarUri, DESEN_SRC,
+  MARK_KOYU_SRC, MARK_ACIK_SRC, LOGO_KOYU_SRC, LOGO_ACIK_SRC
+} from './core/icons.js';
 import { state, subscribe } from './core/state.js';
 import { startClock, subscribeClock, now as clockNow } from './core/clock.js';
 import { defineRoute, initRouter, go, scrollTop, currentTab } from './core/router.js';
@@ -42,19 +45,42 @@ function applyPrefs() {
   if (f) document.documentElement.style.setProperty('--font-arabic', f.stack);
 }
 
-/* Girih dokusu — temaya göre çizgi rengi */
-function applyGirih() {
-  const dark = document.documentElement.dataset.theme === 'dark' ||
-    (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+/* Görsel adresini CSS'e yazılabilir hâle getirir.
+   Göreli yol, değişkeni KULLANAN stil dosyasına göre çözülürdü (/css/assets/…);
+   belgeye göre mutlaklaştırılır, böylece alt yolda yayınlansa da doğru kalır.
+   Paket sürümünde değer zaten data URI'dir. */
+const cssUrl = (src) =>
+  `url("${src.startsWith('data:') ? src : new URL(src, document.baseURI).href}")`;
+
+/* Yürürlükteki tema. Kök öznitelikten DEĞİL doğrudan durumdan okunur:
+   tema değiştiğinde `commit()` aboneleri, kök özniteliği yazan
+   `applyTheme()`den önce çalışıyor ve öznitelik bir adım geride kalıyordu. */
+function isDark() {
+  const t = state.app.theme;
+  if (t === 'dark') return true;
+  if (t === 'light') return false;
+  return matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+/* Marka görselleri ve girih dokusu — temaya göre seçilir */
+function applyBrand() {
+  const dark = isDark();
   const r = document.documentElement.style;
+
   r.setProperty('--girih', girihDataUri(dark ? '%23D9BA6E' : '%23ffffff'));
   // Maske olarak kullanılır; rengi maskede değil, altındaki dolguda belirlenir
   r.setProperty('--girih-star', girihStarUri('%23ffffff'));
-  // Göreli yol, değişkeni KULLANAN stil dosyasına göre çözülürdü (/css/assets/…).
-  // Belgeye göre mutlak adrese çevrilir; alt yolda yayınlansa da doğru kalır.
-  r.setProperty('--desen', `url("${
-    DESEN_SRC.startsWith('data:') ? DESEN_SRC : new URL(DESEN_SRC, document.baseURI).href
-  }")`);
+  r.setProperty('--desen', cssUrl(DESEN_SRC));
+
+  // Temayı izleyen sürüm: koyu zeminde açık logo, açık zeminde koyu logo
+  r.setProperty('--marka-isaret', cssUrl(dark ? MARK_ACIK_SRC : MARK_KOYU_SRC));
+  r.setProperty('--marka-kilit', cssUrl(dark ? LOGO_ACIK_SRC : LOGO_KOYU_SRC));
+
+  // Zemini temadan bağımsız yerler için iki sürüm de her zaman hazır durur
+  r.setProperty('--marka-isaret-acik', cssUrl(MARK_ACIK_SRC));
+  r.setProperty('--marka-isaret-koyu', cssUrl(MARK_KOYU_SRC));
+  r.setProperty('--marka-kilit-acik', cssUrl(LOGO_ACIK_SRC));
+  r.setProperty('--marka-kilit-koyu', cssUrl(LOGO_KOYU_SRC));
 }
 
 /* ------------------------------------------------------------
@@ -147,7 +173,7 @@ function boot() {
   initToast(screen);
 
   applyPrefs();
-  applyGirih();
+  applyBrand();
   startClock();
   applyAtmosphere(clockNow().phase);
 
@@ -175,10 +201,10 @@ function boot() {
 
   // Sistem teması değişince atmosfer ve doku yeniden hesaplansın
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (state.app.theme === 'system') { applyGirih(); applyAtmosphere(clockNow().phase); }
+    if (state.app.theme === 'system') { applyBrand(); applyAtmosphere(clockNow().phase); }
   });
 
-  subscribe(() => applyGirih());
+  subscribe(() => applyBrand());
 
   // Klavye ile gezinme (masaüstü önizleme kolaylığı)
   addEventListener('keydown', (e) => {

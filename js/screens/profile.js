@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { el, $, $$, esc, trNumber, trDate, openSheet, closeSheet, toast, applyAtmosphere } from '../core/ui.js';
-import { icon, logo, logoMark, logoEmblem } from '../core/icons.js';
+import { icon, mark, lockup } from '../core/icons.js';
 import { state, commit, resetAll } from '../core/state.js';
 import { invalidate, now as clockNow } from '../core/clock.js';
 import { toHijri, METHODS } from '../core/astro.js';
@@ -97,7 +97,7 @@ function paint(root) {
 
     <section class="card" style="margin-top:18px">
       <div class="row gap-12">
-        ${logoEmblem(52)}
+        <span class="avatar">${mark(30)}</span>
         <div class="grow">
           <p class="t-h3">${esc(state.user.name || 'Misafir')}</p>
           <p class="t-sec">${esc(state.user.city)} · ${h.day} ${h.monthName} ${h.year}</p>
@@ -468,7 +468,7 @@ function openPrivacy() {
 function openAbout() {
   openSheet('Hakkımızda', `
     <div style="text-align:center;padding:4px 0 20px">
-      ${logoMark(168)}
+      ${lockup(184)}
       <p class="t-sec" style="margin-top:2px">Günün, ibadetin, dengen.</p>
     </div>
     <p class="t-body" style="color:var(--ink-700)">
