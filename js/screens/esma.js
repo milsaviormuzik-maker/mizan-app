@@ -9,7 +9,7 @@
 import { el, $, $$, esc, openSheet, toast } from '../core/ui.js';
 import { icon } from '../core/icons.js';
 import { back } from '../core/router.js';
-import { topbar, empty } from './_blocks.js';
+import { topbar, empty, desenKoseleri } from './_blocks.js';
 import { ESMA, ISM_I_ZAT, ESMA_KAYNAK, ESMA_AYETLER, searchEsma, esmaByNo } from '../data/esma.js';
 
 let arama = '';
@@ -22,8 +22,9 @@ export const esmaScreen = {
         <div class="scroll" data-scroll>
           <div class="screen__body pad-tabbar">
 
-            <section class="card" style="border-color:var(--gold-line)">
-              <span class="card__label" style="color:var(--gold-text)">İsm-i Zât</span>
+            <section class="card card--desenli" style="border-color:var(--gold-line)">
+              ${desenKoseleri()}
+              <span class="card__label" style="color:var(--gold-text);position:relative">İsm-i Zât</span>
               <p class="arabic arabic--feature" dir="rtl" lang="ar"
                 style="font-size:40px;margin-top:14px">${ISM_I_ZAT.ar}</p>
               <p class="t-h2 t-center" style="margin-top:10px">${esc(ISM_I_ZAT.tr)}</p>

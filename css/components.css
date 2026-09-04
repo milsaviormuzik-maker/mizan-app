@@ -887,3 +887,53 @@
   40%  { transform: scale(1.07); }
   100% { transform: scale(1); }
 }
+
+/* ============================================================
+   KÖŞE DESENİ
+   ------------------------------------------------------------
+   Markanın kendi deseni (assets/desen.png) kartların köşesinde,
+   silik ve yavaşça dönerek durur. Yarısı köşenin dışına taşar;
+   kart `overflow:hidden` ile kırptığı için köşeyi saran bir
+   tezhip gibi okunur.
+
+   Desen MASKE olarak kullanılır: rengi maskede değil altındaki
+   dolguda belirlenir, böylece açık ve koyu temada kendiliğinden
+   doğru tarafa döner.
+
+   ZORUNLU: pointer-events:none — bu bir örtüdür, altındaki
+   düğmenin tıklamasını yutarsa hata görünmez olur.
+   ============================================================ */
+.desen-kose {
+  position: absolute;
+  width: 176px; height: 176px;
+  pointer-events: none;
+  background: var(--gold);
+  -webkit-mask-image: var(--desen);
+  mask-image: var(--desen);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: .13;
+}
+/* Dört köşe — yarısı dışarı taşar */
+.desen-kose--su { top: -62px; left: -62px; }
+.desen-kose--sa { top: -62px; right: -62px; }
+.desen-kose--au { bottom: -62px; left: -62px; }
+.desen-kose--aa { bottom: -62px; right: -62px; }
+
+/* Koyu marka kartlarında biraz daha görünür durabilir */
+.card--dark .desen-kose { opacity: .2; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Her köşe farklı hızda ve yönde döner: hepsi aynı anda aynı
+     açıda olursa mekanik görünür. */
+  .desen-kose--su { animation: desen-don 240s linear infinite; }
+  .desen-kose--sa { animation: desen-don 190s linear infinite reverse; }
+  .desen-kose--au { animation: desen-don 210s linear infinite reverse; }
+  .desen-kose--aa { animation: desen-don 265s linear infinite; }
+}
+@keyframes desen-don { to { transform: rotate(360deg); } }
+
+/* Köşe deseni olan kart taşmayı kırpar */
+.card--desenli { overflow: hidden; }

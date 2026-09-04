@@ -10,11 +10,20 @@ import { surahName } from '../data/quran-surahs.js';
 
 const isSaved = (ref) => state.quran.saved.includes(ref);
 
+/** Kartın dört köşesine markanın deseni — silik, yavaşça dönen.
+ *  Kartın `card--desenli` sınıfını alması gerekir (taşmayı kırpar). */
+export function desenKoseleri() {
+  return ['su', 'sa', 'au', 'aa']
+    .map((k) => `<span class="desen-kose desen-kose--${k}" aria-hidden="true"></span>`)
+    .join('');
+}
+
 /* ---------------- Günün Ayeti ---------------- */
 export function verseCard(verse, opts = {}) {
   const ref = `${verse.surah}:${verse.ayah}`;
   return `
-  <section class="card card--verse" data-verse="${ref}">
+  <section class="card card--verse card--desenli" data-verse="${ref}">
+    ${desenKoseleri()}
     <div class="card__head">
       <span class="card__label">${opts.label ?? 'Günün Âyeti'}</span>
       <span class="card__ref">${esc(surahName(verse.surah))} · ${verse.ayah}</span>
