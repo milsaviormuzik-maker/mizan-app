@@ -12,9 +12,45 @@ import { MEALS } from '../data/quran-surahs.js';
 
 let step = 0;
 let onDone = null;
+let onTheme = null;
 
-export function mountOnboarding(host, done) {
+/* Üç seçenek. Önizleme renkleri tokenlerden DEĞİL sabit yazılır:
+   kutu, o an yürürlükte olmayan bir temayı göstermek zorunda. */
+const TEMALAR = [
+  { id: 'light', ad: 'Açık', alt: 'Sıcak fildişi', zemin: '#F6F1E6', ust: '#EFE4CE', murekkep: '#16202F', ikincil: '#5F6675' },
+  { id: 'dark', ad: 'Koyu', alt: 'Gece laciverti', zemin: '#0A111E', ust: '#1C2540', murekkep: '#EDE3D0', ikincil: '#8A8271' },
+  { id: 'system', ad: 'Sistem', alt: 'Cihazına uyar', bolunmus: true }
+];
+
+function temaKutusu(t) {
+  const secili = state.app.theme === t.id;
+  const onizleme = t.bolunmus
+    ? `<span class="tema-kutu__on tema-kutu__on--bolunmus">
+         <span class="tema-kutu__yari" style="background:#F6F1E6">
+           <b style="background:#16202F"></b><i style="background:#5F6675"></i>
+         </span>
+         <span class="tema-kutu__yari" style="background:#0A111E">
+           <b style="background:#EDE3D0"></b><i style="background:#8A8271"></i>
+         </span>
+       </span>`
+    : `<span class="tema-kutu__on" style="background:${t.zemin}">
+         <span class="tema-kutu__ust" style="background:${t.ust}"></span>
+         <b style="background:${t.murekkep}"></b>
+         <i style="background:${t.ikincil}"></i>
+         <u style="background:var(--gold)"></u>
+       </span>`;
+  return `
+    <button class="tema-kutu ${secili ? 'is-on' : ''}" data-act="tema" data-id="${t.id}"
+      role="radio" aria-checked="${secili}">
+      ${onizleme}
+      <span class="tema-kutu__ad">${t.ad}</span>
+      <span class="tema-kutu__alt">${t.alt}</span>
+    </button>`;
+}
+
+export function mountOnboarding(host, done, temaDegisti) {
   onDone = done;
+  onTheme = temaDegisti;
   step = 0;
 
   const node = el(`
@@ -34,6 +70,20 @@ export function mountOnboarding(host, done) {
       </div>
 
       <div class="onb__slide" data-slide="1">
+        <div class="onb__hero" style="min-height:120px">
+          <span style="color:var(--gold)">${icon('sun', 34)}</span>
+          <h2 class="t-h1" style="margin-top:20px">Görünüm</h2>
+          <p class="t-body" style="margin-top:10px;color:var(--ink-700)">
+            Hangi görünümde okumak istersin? Sonradan Profil’den değiştirebilirsin.
+          </p>
+        </div>
+        <div class="tema-grid" data-temalar>
+          ${TEMALAR.map((t) => temaKutusu(t)).join('')}
+        </div>
+        <button class="btn btn--primary btn--block" style="margin-top:20px" data-act="next">Devam</button>
+      </div>
+
+      <div class="onb__slide" data-slide="2">
         <div class="onb__hero">
           <span style="color:var(--gold)">${icon('location', 34)}</span>
           <h2 class="t-h1" style="margin-top:20px">Konum</h2>
@@ -50,7 +100,7 @@ export function mountOnboarding(host, done) {
         <div data-cities style="margin-top:14px;display:none;max-height:240px;overflow-y:auto" class="list scroll"></div>
       </div>
 
-      <div class="onb__slide" data-slide="2">
+      <div class="onb__slide" data-slide="3">
         <div class="onb__hero" style="min-height:150px">
           <span style="color:var(--gold)">${icon('bell', 34)}</span>
           <h2 class="t-h1" style="margin-top:20px">Hatırlatma</h2>
@@ -71,7 +121,7 @@ export function mountOnboarding(host, done) {
         </div>
       </div>
 
-      <div class="onb__slide" data-slide="3">
+      <div class="onb__slide" data-slide="4">
         <div class="onb__hero" style="min-height:130px">
           <span style="color:var(--gold)">${icon('book', 34)}</span>
           <h2 class="t-h1" style="margin-top:20px">Kur’an</h2>
@@ -95,7 +145,7 @@ export function mountOnboarding(host, done) {
       </div>
 
       <div class="onb__dots">
-        ${[0, 1, 2, 3].map((i) => `<span class="onb__dot ${i === 0 ? 'is-on' : ''}" data-dot="${i}"></span>`).join('')}
+        ${[0, 1, 2, 3, 4].map((i) => `<span class="onb__dot ${i === 0 ? 'is-on' : ''}" data-dot="${i}"></span>`).join('')}
       </div>
     </div>`);
 
@@ -107,9 +157,21 @@ export function mountOnboarding(host, done) {
     const act = n.dataset.act;
 
     if (act === 'next') { goStep(node, step + 1); return; }
+    if (act === 'tema') {
+      state.app.theme = n.dataset.id;
+      commit('theme');
+      // Uygulama anında değişsin: seçim soyut bir ayar değil, görülen şey olsun
+      onTheme?.();
+      $$('.tema-kutu', node).forEach((k) => {
+        const secili = k.dataset.id === n.dataset.id;
+        k.classList.toggle('is-on', secili);
+        k.setAttribute('aria-checked', secili);
+      });
+      return;
+    }
     if (act === 'skip-notify') {
       PRAYER_KEYS.forEach((k) => { state.prayer.notify[k] = 'off'; });
-      commit('notify'); goStep(node, 3); return;
+      commit('notify'); goStep(node, 4); return;
     }
     if (act === 'gps') {
       if (!navigator.geolocation) { toast('Konum servisi yok. Şehri elle seçebilirsin.'); showCities(node); return; }
@@ -126,7 +188,7 @@ export function mountOnboarding(host, done) {
           state.user.autoLocation = true;
           commit('city'); invalidate();
           toast(`Konum: ${state.user.city}`);
-          goStep(node, 2);
+          goStep(node, 3);
         },
         () => { toast('Konum izni verilmedi. Şehri elle seçebilirsin.'); showCities(node); }
       );
@@ -142,7 +204,7 @@ export function mountOnboarding(host, done) {
       $$('[data-act="city"] [data-check]', node).forEach((x) => { x.innerHTML = ''; });
       n.querySelector('[data-check]').innerHTML =
         `<span style="color:var(--gold-text)">${icon('check', 18)}</span>`;
-      setTimeout(() => goStep(node, 2), 260);
+      setTimeout(() => goStep(node, 3), 260);
       return;
     }
     if (act === 'toggle-notify') {
@@ -172,7 +234,7 @@ export function mountOnboarding(host, done) {
 }
 
 function goStep(node, i) {
-  step = Math.max(0, Math.min(3, i));
+  step = Math.max(0, Math.min(4, i));
   $$('.onb__slide', node).forEach((s) => s.classList.toggle('is-on', Number(s.dataset.slide) === step));
   $$('.onb__dot', node).forEach((d) => d.classList.toggle('is-on', Number(d.dataset.dot) === step));
 }

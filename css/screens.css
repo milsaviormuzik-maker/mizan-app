@@ -301,3 +301,65 @@
 .plan:active { transform: scale(.99); }
 .plan.is-on { border-color: var(--gold); background: var(--gold-soft); }
 :root[data-theme="dark"] .plan.is-on { background: var(--surface-2); }
+
+/* ---------------- Onboarding: tema seçimi ----------------
+   Üç seçenek, her biri kendi temasının küçük bir önizlemesi.
+   Önizleme renkleri tokenlerden gelmez; kutu, o an yürürlükte
+   OLMAYAN bir temayı göstermek zorunda. */
+.tema-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.tema-kutu {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 12px 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: transparent;
+  transition: border-color 200ms var(--ease-soft), transform 120ms ease-out;
+}
+.tema-kutu:active { transform: scale(.97); }
+.tema-kutu.is-on { border-color: var(--gold); }
+
+/* Önizleme — minik bir ekran: üstte atmosfer, altta metin satırları */
+.tema-kutu__on {
+  position: relative;
+  width: 100%; aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  margin-bottom: 6px;
+}
+.tema-kutu__ust { position: absolute; top: 0; left: 0; right: 0; height: 42%; }
+.tema-kutu__on b,
+.tema-kutu__on i,
+.tema-kutu__on u {
+  position: absolute; left: 14%; height: 3px; border-radius: 2px;
+}
+.tema-kutu__on b { top: 52%; width: 58%; }
+.tema-kutu__on i { top: 65%; width: 40%; opacity: .75; }
+.tema-kutu__on u { top: 79%; width: 30%; height: 8px; border-radius: 4px; }
+
+/* Sistem seçeneği: kutu ikiye bölünür, iki temayı da gösterir */
+.tema-kutu__on--bolunmus { display: flex; }
+.tema-kutu__yari { position: relative; flex: 1; }
+.tema-kutu__yari b,
+.tema-kutu__yari i {
+  position: absolute; left: 16%; height: 3px; border-radius: 2px;
+}
+.tema-kutu__yari b { top: 54%; width: 68%; }
+.tema-kutu__yari i { top: 68%; width: 46%; opacity: .75; }
+
+.tema-kutu__ad {
+  font-family: var(--font-serif);
+  font-size: 15px; font-weight: 500;
+  color: var(--ink-900);
+}
+.tema-kutu.is-on .tema-kutu__ad { color: var(--gold-text); }
+.tema-kutu__alt {
+  font-family: var(--font-serif);
+  font-size: 11.5px; line-height: 1.3;
+  color: var(--ink-500);
+  text-align: center;
+}

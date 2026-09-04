@@ -195,6 +195,11 @@ function boot() {
       applyPrefs();
       applyAtmosphere(clockNow().phase);
       syncTabbar({ tab: currentTab(), chrome: 'tabbar' });
+    }, () => {
+      // Onboarding'de tema seçilince logo ve atmosfer de anında dönsün
+      applyPrefs();
+      applyBrand();
+      applyAtmosphere(clockNow().phase);
     });
   }
 
