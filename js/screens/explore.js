@@ -60,16 +60,16 @@ export const exploreScreen = {
             <p class="section-title">Kütüphane</p>
             <div class="list">
               ${[
-        ['/kesfet/dualar', 'save', 'Dualar', `${DUAS.length} dua · ${DUA_CATEGORIES.length} kategori`],
-        ['/kesfet/esma', 'sparkle', 'Esmâ-i Hüsnâ', '99 isim · anlamlarıyla'],
-        ['/kesfet/hadisler', 'book', 'Hadisler', `${HADITHS.length} hadis · kaynaklarıyla`],
-        ['/kesfet/bilgiler', 'info', 'Dini Bilgiler', `${INFO_ARTICLES.length} konu · abdest, namaz, oruç, zekât`],
-        ['/kesfet/hac', 'kaaba', 'Hac ve Umre Rehberi', 'İhramdan veda tavafına 7 adım'],
-        ['/kesfet/ruya', 'moon', 'Rüya', 'Hadislerde rüya · tabir yok'],
-        ['/kesfet/ogren', 'text', 'Kur’an Öğren', 'Elif-Bâ ve tecvid']
-      ].map(([path, ic, name, sub]) => `
+        ['/kesfet/dualar', 'save', 'Dualar', `${DUAS.length} dua · ${DUA_CATEGORIES.length} kategori`, 'gul'],
+        ['/kesfet/esma', 'sparkle', 'Esmâ-i Hüsnâ', '99 isim · anlamlarıyla', 'amber'],
+        ['/kesfet/hadisler', 'book', 'Hadisler', `${HADITHS.length} hadis · kaynaklarıyla`, 'yesim'],
+        ['/kesfet/bilgiler', 'info', 'Dini Bilgiler', `${INFO_ARTICLES.length} konu · abdest, namaz, oruç, zekât`, 'lacivert'],
+        ['/kesfet/hac', 'kaaba', 'Hac ve Umre Rehberi', 'İhramdan veda tavafına 7 adım', 'firuze'],
+        ['/kesfet/ruya', 'moon', 'Rüya', 'Hadislerde rüya · tabir yok', 'mor'],
+        ['/kesfet/ogren', 'text', 'Kur’an Öğren', 'Elif-Bâ ve tecvid', 'amber']
+      ].map(([path, ic, name, sub, ton]) => `
                 <button class="row-item" data-act="go" data-path="${path}">
-                  <span style="width:26px;display:grid;place-items:center;color:var(--ink-500)">${icon(ic, 19)}</span>
+                  <span class="satir-ikon" data-ton="${ton}">${icon(ic, 19)}</span>
                   <span class="row-item__main">
                     <span class="row-item__title" style="display:block">${name}</span>
                     <span class="row-item__sub">${sub}</span>
@@ -80,9 +80,9 @@ export const exploreScreen = {
 
             <p class="section-title">Sık Kullanılan</p>
             <div class="cat-grid">
-              ${['sabah', 'aksam', 'uyku', 'sikinti', 'bereket', 'korunma'].map((id) => {
+              ${[['sabah','amber'], ['aksam','mor'], ['uyku','lacivert'], ['sikinti','gul'], ['bereket','yesim'], ['korunma','firuze']].map(([id, ton]) => {
         const c = DUA_CATEGORIES.find((x) => x.id === id);
-        return `<button class="cat" data-act="go" data-path="/kesfet/dualar/${id}">
+        return `<button class="cat" data-ton="${ton}" data-act="go" data-path="/kesfet/dualar/${id}">
                   <span class="cat__name">${esc(c.name)}</span>
                   <span class="cat__count">${duasOf(id).length} dua</span>
                 </button>`;

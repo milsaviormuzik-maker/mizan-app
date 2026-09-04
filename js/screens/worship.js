@@ -14,13 +14,13 @@ import { relativeDays } from '../core/ui.js';
 let unsub = null;
 
 const TOOLS = [
-  { path: '/ibadet/vakitler', ic: 'clock', name: 'Namaz Vakitleri', sub: 'Günlük · haftalık · aylık' },
-  { path: '/ibadet/kible', ic: 'compass', name: 'Kıble', sub: 'Kâbe yönü ve pusula' },
-  { path: '/ibadet/tesbih', ic: 'beads', name: 'Dijital Tesbih', sub: 'Zikir ve sayaç' },
-  { path: '/ibadet/zekat', ic: 'calculator', name: 'Zekât Hesaplayıcı', sub: 'Nisap ve tahmini tutar' },
-  { path: '/ibadet/takip', ic: 'chart', name: 'Kaza ve Takip', sub: 'İstersen kapatabilirsin' },
-  { path: '/ibadet/takvim', ic: 'calendar', name: 'Dini Takvim', sub: 'Hicri takvim ve kandiller' },
-  { path: '/ibadet/camiler', ic: 'mosque', name: 'Yakındaki Camiler', sub: 'Konum izniyle çalışır' }
+  { path: '/ibadet/vakitler', ic: 'clock', name: 'Namaz Vakitleri', sub: 'Günlük · haftalık · aylık', ton: 'amber' },
+  { path: '/ibadet/kible', ic: 'compass', name: 'Kıble', sub: 'Kâbe yönü ve pusula', ton: 'firuze' },
+  { path: '/ibadet/tesbih', ic: 'beads', name: 'Dijital Tesbih', sub: 'Zikir ve sayaç', ton: 'yesim' },
+  { path: '/ibadet/zekat', ic: 'calculator', name: 'Zekât Hesaplayıcı', sub: 'Nisap ve tahmini tutar', ton: 'lacivert' },
+  { path: '/ibadet/takip', ic: 'chart', name: 'Kaza ve Takip', sub: 'İstersen kapatabilirsin', ton: 'mor' },
+  { path: '/ibadet/takvim', ic: 'calendar', name: 'Dini Takvim', sub: 'Hicri takvim ve kandiller', ton: 'gul' },
+  { path: '/ibadet/camiler', ic: 'mosque', name: 'Yakındaki Camiler', sub: 'Konum izniyle çalışır', ton: 'firuze' }
 ];
 
 export const worshipScreen = {
@@ -48,7 +48,7 @@ export const worshipScreen = {
             <div class="tool-grid">
               ${TOOLS.map((t) => `
                 <button class="tool" data-act="go" data-path="${t.path}">
-                  <span class="tool__icon">${icon(t.ic, 20)}</span>
+                  <span class="tool__icon" data-ton="${t.ton}">${icon(t.ic, 20)}</span>
                   <span class="tool__name">${esc(t.name)}</span>
                   <span class="tool__sub">${esc(t.sub)}</span>
                 </button>`).join('')}

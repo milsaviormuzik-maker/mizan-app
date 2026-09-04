@@ -85,6 +85,9 @@ export const tasbihScreen = {
         case 'count': {
           t.count += 1;
           t.totalAllTime += 1;
+          // Rakam dokunuşa görsel karşılık versin
+          const sayac = $('[data-count]', root);
+          if (sayac) { sayac.classList.remove('is-bump'); void sayac.offsetWidth; sayac.classList.add('is-bump'); }
           if (t.haptics) haptic(10);
           const btn = n;
           btn.style.transform = 'scale(.975)';

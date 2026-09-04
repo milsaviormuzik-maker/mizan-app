@@ -38,6 +38,21 @@
   --sage: #4E7C6B;
   --clay: #A8543C;
 
+  /* --- İZNİK PALETİ ---------------------------------------------
+     Kategorileri ayırmak için. Markanın motif dili zaten girih ve
+     İznik; renkler de oradan geliyor, bu yüzden lacivert-altın
+     ekseniyle kavga etmiyorlar.
+
+     Kural: bu tonlar YALNIZCA kimliklendirme içindir — ikon rengi
+     ve ikonun arkasındaki kısık zemin. Kart dolgusu, düğme, metin
+     ya da arayüz kromu asla bu tonları almaz. */
+  --iz-firuze: #1F7A76;
+  --iz-gul:    #A34E68;
+  --iz-lacivert: #34558B;
+  --iz-yesim:  #4E7C6B;
+  --iz-mor:    #6A4B87;
+  --iz-amber:  #A8752A;
+
   /* --- Koyu zemin üstü --- */
   --on-navy: #EDE3D0;
   --on-navy-dim: rgba(237, 227, 208, .58);
@@ -124,6 +139,14 @@
   --gold-soft: rgba(201, 169, 97, .09);
   --sage: #7FA894;
   --clay: #C98268;
+
+  /* Koyu zeminde aynı tonlar açılır: kısık renk karanlıkta kaybolur */
+  --iz-firuze: #4FBAB4;
+  --iz-gul:    #DD8AA2;
+  --iz-lacivert: #7FA3DE;
+  --iz-yesim:  #7FB89E;
+  --iz-mor:    #AE90D8;
+  --iz-amber:  #DFA95C;
 
   --on-navy: #EDE3D0;
   --on-navy-dim: rgba(237, 227, 208, .58);

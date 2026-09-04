@@ -764,3 +764,126 @@
   overflow-x: auto;
   white-space: pre;
 }
+
+/* ============================================================
+   İZNİK TONLARI — kategori kimliği
+   ------------------------------------------------------------
+   Kural: ton yalnızca İKONU ve ikonun halkasını renklendirir.
+   Kart dolgusu, metin ve arayüz kromu ink + altın kalır. Böylece
+   sayfa canlanır ama alacalı bir kutu yığınına dönüşmez.
+   ============================================================ */
+[data-ton="firuze"]   { --ton: var(--iz-firuze); }
+[data-ton="gul"]      { --ton: var(--iz-gul); }
+[data-ton="lacivert"] { --ton: var(--iz-lacivert); }
+[data-ton="yesim"]    { --ton: var(--iz-yesim); }
+[data-ton="mor"]      { --ton: var(--iz-mor); }
+[data-ton="amber"]    { --ton: var(--iz-amber); }
+
+.tool__icon[data-ton] {
+  border-color: color-mix(in srgb, var(--ton) 38%, transparent);
+  background: color-mix(in srgb, var(--ton) 9%, transparent);
+  color: var(--ton);
+}
+.tool:hover { border-color: color-mix(in srgb, var(--ton) 42%, transparent); }
+
+/* Liste satırı ikonu — Keşfet kütüphanesi */
+.satir-ikon {
+  width: 30px; height: 30px; flex: none;
+  display: grid; place-items: center;
+  border-radius: var(--r-full);
+  background: color-mix(in srgb, var(--ton) 11%, transparent);
+  color: var(--ton);
+}
+
+/* ============================================================
+   HAREKET — sayfa "duruyor" gibi değil, "yerleşiyor" gibi olsun
+   Hepsi prefers-reduced-motion içinde; kapalıysa hiçbiri çalışmaz.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Kartlar sırayla yerleşir */
+  .stagger > * { animation: yerles 520ms var(--ease-soft) both; }
+  .stagger > *:nth-child(1) { animation-delay: 40ms; }
+  .stagger > *:nth-child(2) { animation-delay: 100ms; }
+  .stagger > *:nth-child(3) { animation-delay: 160ms; }
+  .stagger > *:nth-child(4) { animation-delay: 220ms; }
+  .stagger > *:nth-child(5) { animation-delay: 280ms; }
+  .stagger > *:nth-child(n+6) { animation-delay: 330ms; }
+
+  /* Araç ızgarası tek tek belirir */
+  .tool-grid .tool { animation: yerles 460ms var(--ease-soft) both; }
+  .tool-grid .tool:nth-child(2) { animation-delay: 60ms; }
+  .tool-grid .tool:nth-child(3) { animation-delay: 110ms; }
+  .tool-grid .tool:nth-child(4) { animation-delay: 160ms; }
+  .tool-grid .tool:nth-child(5) { animation-delay: 210ms; }
+  .tool-grid .tool:nth-child(6) { animation-delay: 260ms; }
+  .tool-grid .tool:nth-child(7) { animation-delay: 310ms; }
+
+  /* Esmâ kutuları dalga hâlinde açılır */
+  .esma { animation: esma-ac 420ms var(--ease-soft) both; }
+
+  /* Sıradaki vakit hücresi yavaşça nefes alır — göz oraya gitsin */
+  .time-strip__cell.is-next .time-strip__time { animation: nefes 3.4s ease-in-out infinite; }
+
+  /* İlerleme çubuğu soldan dolar */
+  .progress__fill { animation: dol 900ms var(--ease-soft) both; }
+
+  /* Altın süs ayırıcı ortadan açılır */
+  .ornament::before, .ornament::after { animation: hat-ac 700ms var(--ease-soft) 200ms both; }
+
+  /* Sekme değişince aktif nokta zıplar */
+  .tab.is-on .tab__dot { animation: nokta 380ms var(--ease-soft); }
+}
+
+@keyframes yerles {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes esma-ac {
+  from { opacity: 0; transform: scale(.94); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes nefes {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .55; }
+}
+@keyframes dol {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+@keyframes hat-ac {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes nokta {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Dokunma geri bildirimi — her basılabilir yüzey karşılık versin */
+.tool:active, .cat:active, .esma:active { transform: scale(.97); }
+.row-item:active { background: color-mix(in srgb, var(--ton, var(--gold)) 7%, var(--surface-2)); }
+
+/* Dua kısayolları — sol kenarda ince bir ton şeridi.
+   Kutunun tamamını boyamak alacalı görünürdü; şerit yeter. */
+.cat[data-ton] { position: relative; padding-left: 18px; }
+.cat[data-ton]::before {
+  content: "";
+  position: absolute; left: 0; top: 14px; bottom: 14px;
+  width: 2px; border-radius: 2px;
+  background: var(--ton);
+  opacity: .75;
+  pointer-events: none;
+}
+.cat[data-ton]:hover { border-color: color-mix(in srgb, var(--ton) 40%, transparent); }
+
+/* Tesbih sayacı — her dokunuşta rakam hafifçe büyür */
+@media (prefers-reduced-motion: no-preference) {
+  .t-count.is-bump { animation: sayac-bump 220ms var(--ease-soft); }
+}
+@keyframes sayac-bump {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}

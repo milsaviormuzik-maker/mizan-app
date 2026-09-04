@@ -178,13 +178,27 @@ export function toast(message) {
    Bu yüzden her iki temada da renkler SAYFA AİLESİNDEN seçilir —
    koyuda derin lacivert, açıkta sıcak krem. Vakit değişimi tonu
    kaydırır, kontrastı değil. */
+/* Vakit atmosferi — altı vakit BİRBİRİNDEN AYIRT EDİLEBİLİR olmalı.
+   Önceki set neredeyse tek renkti (krem→krem, lacivert→lacivert) ve
+   uygulamayı cansız gösteriyordu. Artık her vakit kendi rengini
+   taşıyor; ama doygunluk sınırlı ve ikinci durak hep sayfa zeminine
+   dönüyor, böylece başlık sayfaya yapıştırılmış bir afiş gibi durmuyor.
+
+   Metin kontrastı korunuyor: --atmos-ink her iki temada da sabit
+   kalıyor ve ilk durak asla metni yutacak kadar koyulaşmıyor. */
 const ATMOS = {
-  gece:   { light: ['#E7E0D0', '#F6F1E6'], dark: ['#0E1A2E', '#080E19'] },
-  sabah:  { light: ['#E6DFD0', '#F6F1E6'], dark: ['#12203A', '#0A1220'] },
-  kusluk: { light: ['#EAE4D6', '#F7F2E9'], dark: ['#152741', '#0B1322'] },
-  ogle:   { light: ['#EEE8DB', '#F7F2E9'], dark: ['#16294A', '#0B1322'] },
-  ikindi: { light: ['#EFE4CE', '#F7F2E9'], dark: ['#1C2540', '#0A1220'] },
-  aksam:  { light: ['#E8DDCC', '#F6F1E6'], dark: ['#181A38', '#090C18'] }
+  // gece: soğuk lacivert-mor
+  gece:   { light: ['#D6DCE9', '#F6F1E6'], dark: ['#131E3C', '#080E19'] },
+  // sabah: şafak gülü
+  sabah:  { light: ['#F0D9D2', '#F6F1E6'], dark: ['#2A2447', '#0A1220'] },
+  // kuşluk: açık gök
+  kusluk: { light: ['#D7E4EC', '#F7F2E9'], dark: ['#14314F', '#0B1322'] },
+  // öğle: aydınlık firuze
+  ogle:   { light: ['#D9E8E4', '#F7F2E9'], dark: ['#123F45', '#0B1322'] },
+  // ikindi: bal ve amber
+  ikindi: { light: ['#F2E1C4', '#F7F2E9'], dark: ['#3A2E1B', '#0A1220'] },
+  // akşam: mor-şarap
+  aksam:  { light: ['#E4D3E0', '#F6F1E6'], dark: ['#2A1B3C', '#090C18'] }
 };
 
 /** Şu anki vakit anahtarından atmosfer dilimini seç */
