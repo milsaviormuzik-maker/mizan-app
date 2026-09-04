@@ -98,7 +98,7 @@ function paint(root, ctx) {
       <div class="wg__frame">
         <div class="row-between" style="margin-bottom:14px">
           <div class="row gap-6">
-            <span style="color:var(--navy)">${logo(15, 'currentColor')}</span>
+            <span style="color:var(--gold)">${logo(15, 'currentColor')}</span>
             <span style="font-size:12px;font-weight:600">${esc(state.user.city)}</span>
           </div>
           <span class="t-cap">${ctx.hijri.day} ${ctx.hijri.monthName.toLocaleUpperCase('tr')}</span>
@@ -107,11 +107,11 @@ function paint(root, ctx) {
           ${PRAYER_KEYS.map((k) => {
     const cur = k === ctx.currentKey, nx = k === ctx.nextKey;
     return `<div style="text-align:center;padding:9px 2px;border-radius:12px;
-              ${cur ? 'background:var(--navy);color:var(--on-navy)' : nx ? 'border:1px solid var(--gold-line)' : ''}">
+              ${cur ? 'background:var(--ink-900);color:var(--bg)' : nx ? 'border:1px solid var(--gold-line)' : ''}">
               <p style="font-size:9.5px;font-weight:600;letter-spacing:.04em;
-                color:${cur ? 'rgba(246,242,233,.72)' : 'var(--ink-500)'}">${PRAYER_NAMES[k].toLocaleUpperCase('tr')}</p>
+                color:${cur ? 'color-mix(in srgb, var(--bg) 72%, transparent)' : 'var(--ink-500)'}">${PRAYER_NAMES[k].toLocaleUpperCase('tr')}</p>
               <p style="font-size:12.5px;font-weight:${cur || nx ? 650 : 500};font-variant-numeric:tabular-nums;margin-top:2px;
-                color:${cur ? 'var(--on-navy)' : nx ? 'var(--gold-text)' : 'var(--ink-900)'}">${hhmm(ctx.today[k])}</p>
+                color:${cur ? 'var(--bg)' : nx ? 'var(--gold-text)' : 'var(--ink-900)'}">${hhmm(ctx.today[k])}</p>
             </div>`;
   }).join('')}
         </div>

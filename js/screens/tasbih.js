@@ -47,7 +47,7 @@ export const tasbihScreen = {
             <div style="flex:1;display:grid;place-items:center;min-height:280px;padding:20px 0">
               <button data-act="count" aria-label="Say"
                 style="position:relative;width:236px;height:236px;border-radius:50%;
-                  background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-2);
+                  background:var(--surface);border:1px solid var(--line);box-shadow:none;
                   display:grid;place-items:center;transition:transform 90ms ease-out">
                 <span style="position:absolute;inset:0;display:grid;place-items:center;color:var(--ink-300)" data-ring>
                   ${ringSvg(0, 236, 5)}

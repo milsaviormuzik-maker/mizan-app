@@ -459,7 +459,7 @@ function openPrivacy() {
       'Mizan reklam kimliği toplamaz, üçüncü taraf izleyici kullanmaz.',
       'Mizan Sor’a yazdığın sorular cevabın oluşturulması dışında saklanmaz.'].map((t) => `
         <li class="t-body" style="padding:9px 0 9px 17px;position:relative;color:var(--ink-700)">
-          <span style="position:absolute;left:0;top:16px;width:5px;height:5px;border-radius:50%;background:var(--sage)"></span>
+          <span style="position:absolute;left:0;top:16px;width:5px;height:5px;border-radius:50%;background:var(--gold)"></span>
           ${esc(t)}
         </li>`).join('')}
     </ul>`);

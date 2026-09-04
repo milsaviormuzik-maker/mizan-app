@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { $, initSheet, initToast, applyAtmosphere, closeSheet } from './core/ui.js';
-import { icon, girihDataUri, girihStarUri } from './core/icons.js';
+import { icon, girihDataUri, girihStarUri, DESEN_SRC } from './core/icons.js';
 import { state, subscribe } from './core/state.js';
 import { startClock, subscribeClock, now as clockNow } from './core/clock.js';
 import { defineRoute, initRouter, go, scrollTop, currentTab } from './core/router.js';
@@ -50,6 +50,11 @@ function applyGirih() {
   r.setProperty('--girih', girihDataUri(dark ? '%23D9BA6E' : '%23ffffff'));
   // Maske olarak kullanılır; rengi maskede değil, altındaki dolguda belirlenir
   r.setProperty('--girih-star', girihStarUri('%23ffffff'));
+  // Göreli yol, değişkeni KULLANAN stil dosyasına göre çözülürdü (/css/assets/…).
+  // Belgeye göre mutlak adrese çevrilir; alt yolda yayınlansa da doğru kalır.
+  r.setProperty('--desen', `url("${
+    DESEN_SRC.startsWith('data:') ? DESEN_SRC : new URL(DESEN_SRC, document.baseURI).href
+  }")`);
 }
 
 /* ------------------------------------------------------------

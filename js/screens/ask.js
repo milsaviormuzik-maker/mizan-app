@@ -79,7 +79,7 @@ function paint(root) {
     box.innerHTML = `
       <div style="padding:26px 0 8px">
         <div class="row gap-10" style="align-items:flex-start">
-          <span class="icon-btn" style="background:var(--navy);color:var(--gold);flex:none">${icon('message', 18)}</span>
+          <span class="icon-btn" style="border-color:var(--gold-line);color:var(--gold);flex:none">${icon('message', 18)}</span>
           <div class="grow">
             <p class="t-h3">Mizan Sor</p>
             <p class="t-sec" style="margin-top:5px">

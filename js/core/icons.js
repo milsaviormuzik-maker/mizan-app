@@ -101,9 +101,10 @@ export function logo(size = 26, color = 'currentColor', accent = null) {
   </svg>`;
 }
 
-/* Marka görselinin TEK kaynağı. Paketleyici bu değeri data URI ile
-   değiştirir; tek dosya derlemesinde görsel bir kez gömülür. */
+/* Marka görsellerinin TEK kaynağı. Paketleyici bu değerleri data URI ile
+   değiştirir; tek dosya derlemesinde görseller bir kez gömülür. */
 export const LOGO_SRC = 'assets/logo.png';
+export const DESEN_SRC = 'assets/desen.png';
 
 /** Tam marka kilitlemesi — yalnızca yer olan yerlerde (açılış, hakkımızda) */
 export function logoMark(width = 180, alt = 'Mizan') {

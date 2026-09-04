@@ -14,22 +14,23 @@ const isSaved = (ref) => state.quran.saved.includes(ref);
 export function verseCard(verse, opts = {}) {
   const ref = `${verse.surah}:${verse.ayah}`;
   return `
-  <section class="card" data-verse="${ref}">
+  <section class="card card--verse" data-verse="${ref}">
     <div class="card__head">
       <span class="card__label">${opts.label ?? 'Günün Âyeti'}</span>
-      <span class="badge">${esc(surahName(verse.surah))} ${verse.ayah}</span>
+      <span class="card__ref">${esc(surahName(verse.surah))} · ${verse.ayah}</span>
     </div>
-    <p class="arabic" dir="rtl" lang="ar">${verse.ar}</p>
-    <hr class="hairline" style="margin:16px 0">
-    <p class="t-body">${esc(verse.tr)}</p>
-    ${verse.tl ? `<p class="translit" style="margin-top:8px">${esc(verse.tl)}</p>` : ''}
+    <p class="arabic arabic--feature" dir="rtl" lang="ar">${verse.ar}</p>
+    <div class="ornament" aria-hidden="true"><span class="ornament__mark"></span></div>
+    <p class="t-body t-center">${esc(verse.tr)}</p>
+    ${verse.tl ? `<p class="translit t-center" style="margin-top:10px">${esc(verse.tl)}</p>` : ''}
     <div class="card__actions">
-      <button class="chip" data-act="verse-listen" data-ref="${ref}">${icon('volume', 15)} Dinle</button>
-      <button class="chip" data-act="verse-tafsir" data-ref="${ref}">${icon('book', 15)} Tefsir</button>
+      <button class="chip" data-act="verse-listen" data-ref="${ref}">${icon('play', 16)} Dinle</button>
+      <button class="chip" data-act="verse-tafsir" data-ref="${ref}">${icon('book', 16)} Tefsir</button>
       <button class="chip ${isSaved(ref) ? 'is-on' : ''}" data-act="verse-save" data-ref="${ref}">
-        ${icon('save', 15)} ${isSaved(ref) ? 'Kaydedildi' : 'Kaydet'}
+        ${icon('bookmark', 16)} ${isSaved(ref) ? 'Kayıtlı' : 'Kaydet'}
       </button>
-      <button class="chip" data-act="verse-share" data-ref="${ref}">${icon('share', 15)} Paylaş</button>
+      <button class="chip chip--icon" data-act="verse-share" data-ref="${ref}"
+        aria-label="Paylaş" title="Paylaş">${icon('share', 16)}</button>
     </div>
   </section>`;
 }

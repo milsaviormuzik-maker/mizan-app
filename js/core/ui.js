@@ -173,13 +173,17 @@ export function toast(message) {
    ATMOSFER — vakte göre kayan başlık zemini
    Doygunluk düşük tutulur; amaç hissettirmek, göstermek değil.
    ------------------------------------------------------------ */
+/* Atmosfer artık sayfadan kopuk bir blok değil; zeminin kendisidir.
+   Bu yüzden her iki temada da renkler SAYFA AİLESİNDEN seçilir —
+   koyuda derin lacivert, açıkta sıcak krem. Vakit değişimi tonu
+   kaydırır, kontrastı değil. */
 const ATMOS = {
-  gece:   { light: ['#1B2A44', '#0E1728'], dark: ['#0D1526', '#070B14'], ink: '#F6F2E9' },
-  sabah:  { light: ['#2E4463', '#6E7E96'], dark: ['#131E33', '#1C2A42'], ink: '#F6F2E9' },
-  kusluk: { light: ['#8FA6C4', '#DCE4EF'], dark: ['#16233A', '#0D1524'], ink: '#0E1626' },
-  ogle:   { light: ['#B7C6DA', '#EFE9DC'], dark: ['#182640', '#0E1727'], ink: '#0E1626' },
-  ikindi: { light: ['#C9A87E', '#E9DCC6'], dark: ['#231F2E', '#0F1220'], ink: '#20180C' },
-  aksam:  { light: ['#5B4468', '#2A2B47'], dark: ['#1A1430', '#090C16'], ink: '#F6F2E9' }
+  gece:   { light: ['#E7E0D0', '#F6F1E6'], dark: ['#0E1A2E', '#080E19'] },
+  sabah:  { light: ['#E6DFD0', '#F6F1E6'], dark: ['#12203A', '#0A1220'] },
+  kusluk: { light: ['#EAE4D6', '#F7F2E9'], dark: ['#152741', '#0B1322'] },
+  ogle:   { light: ['#EEE8DB', '#F7F2E9'], dark: ['#16294A', '#0B1322'] },
+  ikindi: { light: ['#EFE4CE', '#F7F2E9'], dark: ['#1C2540', '#0A1220'] },
+  aksam:  { light: ['#E8DDCC', '#F6F1E6'], dark: ['#181A38', '#090C18'] }
 };
 
 /** Şu anki vakit anahtarından atmosfer dilimini seç */
@@ -200,20 +204,19 @@ export function applyAtmosphere(phase) {
       matchMedia('(prefers-color-scheme: dark)').matches);
   const spec = ATMOS[phase] || ATMOS.gece;
   const [a, b] = isDark ? spec.dark : spec.light;
-  const ink = isDark ? '#F2F4F8' : spec.ink;
 
-  // Altın, açık zeminde küçük metin için yeterli kontrast vermez.
-  // Zemin aydınlıkken koyu altına düşülür (erişilebilirlik kuralı §9).
-  const lightGround = !isDark && ink !== '#F6F2E9';
-  const accent = lightGround ? '#7A5E14' : (isDark ? '#D9BA6E' : '#D8B76A');
+  // Mürekkep zeminle birlikte gelir: koyuda sıcak fildişi, açıkta lacivert.
+  // Altın açık zeminde küçük metin için yeterli kontrast vermez (§9).
+  const ink = isDark ? '#EDE3D0' : '#16202F';
+  const accent = isDark ? '#C9A961' : '#8A6B22';
 
   const r = document.documentElement.style;
   r.setProperty('--atmos-a', a);
   r.setProperty('--atmos-b', b);
   r.setProperty('--atmos-ink', ink);
-  r.setProperty('--atmos-ink-dim', hexAlpha(ink, 0.62));
+  r.setProperty('--atmos-ink-dim', hexAlpha(ink, isDark ? 0.58 : 0.62));
   r.setProperty('--atmos-accent', accent);
-  r.setProperty('--atmos-veil', lightGround ? 'rgba(11,18,32,.07)' : 'rgba(255,255,255,.14)');
+  r.setProperty('--atmos-veil', isDark ? 'rgba(237,227,208,.055)' : 'rgba(22,32,47,.045)');
 }
 
 function hexAlpha(hex, a) {

@@ -27,57 +27,38 @@ function headerHtml(ctx) {
   const g = ctx.hijri;
   return `
   <header class="atmos" data-atmos>
-    <div class="row-between">
-      <div class="row gap-8">
-        <span style="display:grid;place-items:center;opacity:.95">${logo(24, 'currentColor')}</span>
-        <span style="font-family:var(--font-serif);font-size:22px;font-weight:500;letter-spacing:.005em;line-height:1">Mizan</span>
+    <div class="row-between" style="position:relative">
+      <div class="row gap-10">
+        <span style="display:grid;place-items:center;opacity:.92">${logo(30, 'currentColor', 'var(--atmos-accent)')}</span>
+        <span class="wordmark">Mizan</span>
       </div>
-      <button class="row gap-6" data-act="pick-city"
-        style="color:var(--atmos-ink-dim);font-size:13.5px;font-weight:500">
-        ${icon('location', 15)}<span>${esc(state.user.city)}</span>
+      <button class="row gap-7 pressable" data-act="pick-city"
+        style="color:var(--atmos-ink-dim);font-family:var(--font-serif);font-size:16px">
+        ${icon('location', 16)}<span>${esc(state.user.city)}</span>
       </button>
     </div>
 
-    <div style="margin-top:22px;display:flex;align-items:baseline;gap:10px">
-      <p style="font-size:13.5px;color:var(--atmos-ink);opacity:.9;font-weight:500">
-        ${trDayName(ctx.now)} · ${trDate(ctx.now)}
-      </p>
-      <span style="width:3px;height:3px;border-radius:50%;background:var(--atmos-accent);opacity:.7;flex:none"></span>
-      <p style="font-size:13.5px;color:var(--atmos-ink-dim)">
-        ${g.day} ${g.monthName} ${g.year}
-      </p>
-    </div>
+    <p class="atmos__date" style="position:relative">
+      ${trDayName(ctx.now)}<span class="dot">·</span>${trDate(ctx.now)}<span class="dot">·</span>${g.day} ${g.monthName} ${g.year}
+    </p>
 
-    <div class="row-between" style="margin-top:30px;align-items:flex-end">
-      <div style="min-width:0">
-        <p class="t-vakit" style="color:var(--atmos-accent)" data-next-name>${esc(SALAH_NAMES[ctx.nextKey] ?? PRAYER_NAMES[ctx.nextKey])}</p>
-        <p class="t-count" style="margin-top:8px;color:var(--atmos-ink)" data-countdown>${countdownHtml(ctx.remainingSec)}</p>
-        <p style="font-size:12.5px;color:var(--atmos-ink-dim);margin-top:8px" data-next-label>
-          ${esc(SALAH_NAMES[ctx.nextKey] ?? PRAYER_NAMES[ctx.nextKey])} ${ctx.nextKey === 'gunes' ? 'vaktine' : 'namazına'} kalan süre
-        </p>
-      </div>
-      <div style="position:relative;color:var(--atmos-ink);flex:none;margin-bottom:4px" data-ring>
-        ${ringSvg(ctx.progress, 66, 2.5)}
-        <span style="position:absolute;inset:0;display:grid;place-items:center;line-height:1.1;text-align:center">
-          <span style="display:block">
-            <span style="display:block;font-size:8.5px;font-weight:600;letter-spacing:.14em;opacity:.55">VAKİT</span>
-            <span style="display:block;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em"
-              data-next-time>${hhmm(ctx.today[ctx.nextKey] ?? ctx.tomorrow[ctx.nextKey])}</span>
-          </span>
-        </span>
-      </div>
+    <div style="position:relative;margin-top:30px">
+      <p class="t-vakit" style="color:var(--atmos-accent)" data-next-name>${esc(SALAH_NAMES[ctx.nextKey] ?? PRAYER_NAMES[ctx.nextKey])}</p>
+      <p class="t-count" style="margin-top:10px;color:var(--atmos-ink)" data-countdown>${countdownHtml(ctx.remainingSec)}</p>
+      <p style="font-family:var(--font-serif);font-size:16px;color:var(--atmos-ink-dim);margin-top:6px" data-next-label>
+        ${esc(SALAH_NAMES[ctx.nextKey] ?? PRAYER_NAMES[ctx.nextKey])} ${ctx.nextKey === 'gunes' ? 'vaktine' : 'namazına'} kalan süre
+      </p>
     </div>
 
     <div class="time-strip" data-strip>${stripHtml(ctx)}</div>
-  </header>
-  <div class="atmos-fade" aria-hidden="true"></div>`;
+  </header>`;
 }
 
-/** Geri sayım — saniye küçülür, göz önce saat:dakikayı okur */
+/** Geri sayım — saat:dakika büyük, saniye ayrı bir birim olarak yanında */
 function countdownHtml(sec) {
   const t = hms(sec);
-  const i = t.lastIndexOf(':');
-  return `${t.slice(0, i)}<span class="t-count__sec">${t.slice(i)}</span>`;
+  const [h, m, s] = t.split(':');
+  return `${h}:${m}<span class="t-count__sec">${s} sn</span>`;
 }
 
 function stripHtml(ctx) {
@@ -142,7 +123,7 @@ function quranCardHtml() {
         <p class="t-h3" style="margin-top:9px">${esc(surahName(surah))} sûresi · ${ayah}. âyet</p>
         <p class="t-sec" style="margin-top:3px">${esc(s.text)}</p>
       </div>
-      <span class="icon-btn" style="background:var(--navy);color:var(--on-navy)">${icon('play', 16)}</span>
+      <span class="icon-btn" style="border-color:var(--gold-line);color:var(--gold)">${icon('play', 16)}</span>
     </div>
   </section>`;
 }

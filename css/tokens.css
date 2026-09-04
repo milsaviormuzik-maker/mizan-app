@@ -1,129 +1,140 @@
 /* ============================================================
    MİZAN — Tasarım Tokenleri
-   Tek kaynak. Hiçbir bileşende sabit renk yoktur.
+   ------------------------------------------------------------
+   Yön: tek bir zemin, üstünde saç teli çizgilerle tanımlanmış
+   yüzeyler. Kutu üstüne kutu yığılmaz — "kart" dediğimiz şey
+   dolgulu bir dikdörtgen değil, ince bir çerçevedir.
+
+   Mürekkep soğuk beyaz değil SICAK FİLDİŞİDİR; altın tek vurgu
+   rengidir. Bu ikisi lacivert zeminle birlikte markanın sesidir.
    ============================================================ */
 
 :root {
-  /* --- Mürekkep (metin) --- */
-  --ink-900: #0B1220;
-  --ink-700: #2A3548;
-  --ink-500: #5B6779;
-  --ink-300: #98A3B3;
+  /* --- Zemin --- */
+  --bg: #F6F1E6;
+  --bg-deep: #EFE8D9;
+  --surface: rgba(22, 32, 47, .022);
+  --surface-2: rgba(22, 32, 47, .045);
+  --surface-3: rgba(22, 32, 47, .07);
 
-  /* --- Yüzeyler --- */
-  --bg: #FBF8F3;
-  --surface: #FFFFFF;
-  --surface-2: #F5F1E9;
-  --surface-3: #EDE7DA;
-  --line: #E8E2D6;
-  --line-strong: #DCD4C4;
+  /* --- Çizgi --- */
+  --line: rgba(22, 32, 47, .13);
+  --line-strong: rgba(22, 32, 47, .24);
+  --hair: rgba(22, 32, 47, .09);
+
+  /* --- Mürekkep --- */
+  --ink-900: #16202F;
+  --ink-700: #3D4658;
+  --ink-500: #5F6675;
+  --ink-300: #8B909C;
 
   /* --- Marka --- */
-  --navy: #152238;
+  --navy: #16233C;
   --navy-soft: #22314E;
-  --gold: #C8A557;
-  --gold-text: #7A5E14;   /* açık zeminde okunabilir altın (≥4.5:1) */
-  --gold-soft: #F0E6CE;
-  --gold-line: rgba(200, 165, 87, .38);
+  --gold: #B08D3E;
+  --gold-text: #7A5E14;
+  --gold-line: rgba(176, 141, 62, .34);
+  --gold-soft: rgba(176, 141, 62, .10);
   --sage: #4E7C6B;
-  --clay: #B4674F;
+  --clay: #A8543C;
 
-  /* --- Kontrast metin (koyu zemin üstü) --- */
-  --on-navy: #F6F2E9;
-  --on-navy-dim: rgba(246, 242, 233, .62);
+  /* --- Koyu zemin üstü --- */
+  --on-navy: #EDE3D0;
+  --on-navy-dim: rgba(237, 227, 208, .58);
 
-  /* --- Malzeme ---
-     Gölge nötr gri değil, lacivert kırılımlıdır: sıcak krem zemin üzerinde
-     gri gölge kirli görünür. Üst iç çizgi kartlara frezelenmiş kenar hissi verir. */
-  --shadow-1: 0 1px 1px rgba(21, 34, 56, .035), 0 3px 10px rgba(21, 34, 56, .045);
-  --shadow-2: 0 2px 6px rgba(21, 34, 56, .06), 0 16px 40px rgba(21, 34, 56, .10);
-  --shadow-sheet: 0 -10px 60px rgba(11, 18, 32, .20);
+  /* --- Malzeme --- */
+  --shadow-1: 0 1px 1px rgba(22, 32, 47, .03), 0 4px 14px rgba(22, 32, 47, .05);
+  --shadow-2: 0 2px 6px rgba(22, 32, 47, .06), 0 18px 44px rgba(22, 32, 47, .10);
+  --shadow-sheet: 0 -10px 60px rgba(11, 18, 32, .22);
   --card-border: 1px solid var(--line);
-  --card-hi: inset 0 1px 0 rgba(255, 255, 255, .8);
-  --edge: inset 0 0 0 1px rgba(21, 34, 56, .02);
+  --card-hi: none;
 
-  /* Film grenaj — büyük gradyanlarda bantlanmayı keser, malzeme hissi verir */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /* --- Cam --- */
-  --glass: rgba(251, 248, 243, .72);
-  --glass-line: rgba(11, 18, 32, .07);
+  --glass: rgba(246, 241, 230, .80);
+  --glass-line: rgba(22, 32, 47, .10);
 
   /* --- Ölçek --- */
-  --gutter: 20px;
+  --gutter: 22px;
   --card-pad: 20px;
   --stack: 14px;
-  --section: 32px;
+  --section: 34px;
 
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-lg: 24px;
-  --r-xl: 30px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-xl: 26px;
   --r-full: 999px;
 
   /* --- Tipografi ---
-     Serif, marka kelime işaretinin yüksek kontrastlı hattıyla eşleşir:
-     başlıklar ve marka anları onunla yazılır. Sayısal veri ve etiketler
-     grotesk kalır — editoryal ses + hassas ölçüm aleti. */
-  --font-serif: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
-  --font-display: "Inter Tight", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-text: "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-arabic: "Amiri Quran", "Amiri", "Scheherazade New", "Traditional Arabic", serif;
+     Uygulama serif konuşur. Cormorant büyük anlar için (sayaç,
+     kelime markası), Newsreader okuma ve başlıklar için. Grotesk
+     yalnızca çok küçük etiketlerde yedek olarak kalır. */
+  --font-display: "Cormorant Garamond", "Newsreader", Georgia, serif;
+  --font-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-text: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-ui: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-arabic: "Amiri Quran", "Amiri", "Scheherazade New", serif;
 
-  --fs-body: 15px;
+  --fs-body: 16px;
 
   /* --- Hareket --- */
   --ease: cubic-bezier(.32, .72, 0, 1);
-  --dur-push: 320ms;
-  --dur-sheet: 380ms;
-  --dur-atmos: 1200ms;
+  --ease-soft: cubic-bezier(.4, 0, .2, 1);
+  --dur-push: 340ms;
+  --dur-sheet: 400ms;
+  --dur-atmos: 1400ms;
 
   /* --- Atmosfer (JS tarafından yazılır) --- */
-  --atmos-a: #1B2A44;
-  --atmos-b: #0E1728;
-  --atmos-ink: #F6F2E9;
-  --atmos-ink-dim: rgba(246, 242, 233, .60);
+  --atmos-a: #16233C;
+  --atmos-b: #0B1220;
+  --atmos-ink: #EDE3D0;
+  --atmos-ink-dim: rgba(237, 227, 208, .58);
+  --atmos-accent: #C9A961;
+  --atmos-veil: rgba(237, 227, 208, .07);
 
   color-scheme: light;
 }
 
 /* ============================================================
-   KOYU TEMA
+   KOYU TEMA — referans görünüm
    ============================================================ */
 :root[data-theme="dark"] {
-  --ink-900: #F2F4F8;
-  --ink-700: #C9D1DE;
-  --ink-500: #8E9AAC;
-  --ink-300: #5F6B7D;
+  --bg: #0A111E;
+  --bg-deep: #070C16;
+  --surface: rgba(237, 227, 208, .022);
+  --surface-2: rgba(237, 227, 208, .05);
+  --surface-3: rgba(237, 227, 208, .08);
 
-  --bg: #070A11;
-  --surface: #121926;
-  --surface-2: #19212F;
-  --surface-3: #212B3B;
-  --line: #232D3E;
-  --line-strong: #303B4E;
+  --line: rgba(237, 227, 208, .11);
+  --line-strong: rgba(237, 227, 208, .20);
+  --hair: rgba(237, 227, 208, .08);
 
-  --navy: #1B2B47;
-  --navy-soft: #24375A;
-  --gold: #D9BA6E;
-  --gold-text: #D9BA6E;
-  --gold-soft: #2A2418;
-  --gold-line: rgba(217, 186, 110, .34);
-  --sage: #6DA08C;
+  --ink-900: #EDE3D0;
+  --ink-700: #B4AA97;
+  --ink-500: #8A8271;
+  --ink-300: #5E5849;
+
+  --navy: #14203A;
+  --navy-soft: #1D2C4A;
+  --gold: #C9A961;
+  --gold-text: #C9A961;
+  --gold-line: rgba(201, 169, 97, .30);
+  --gold-soft: rgba(201, 169, 97, .09);
+  --sage: #7FA894;
   --clay: #C98268;
 
-  --on-navy: #F2F4F8;
-  --on-navy-dim: rgba(242, 244, 248, .60);
+  --on-navy: #EDE3D0;
+  --on-navy-dim: rgba(237, 227, 208, .58);
 
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, .34), 0 8px 22px rgba(0, 0, 0, .26);
-  --shadow-2: 0 16px 48px rgba(0, 0, 0, .55);
-  --shadow-sheet: 0 -10px 64px rgba(0, 0, 0, .62);
-  --card-border: 1px solid var(--line);
-  --card-hi: inset 0 1px 0 rgba(255, 255, 255, .055);
-  --edge: inset 0 0 0 1px rgba(255, 255, 255, .012);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .30), 0 10px 28px rgba(0, 0, 0, .22);
+  --shadow-2: 0 18px 52px rgba(0, 0, 0, .55);
+  --shadow-sheet: 0 -10px 64px rgba(0, 0, 0, .66);
+  --card-hi: none;
 
-  --glass: rgba(9, 13, 21, .76);
-  --glass-line: rgba(255, 255, 255, .08);
+  --glass: rgba(10, 17, 30, .82);
+  --glass-line: rgba(237, 227, 208, .10);
 
   color-scheme: dark;
 }
@@ -131,60 +142,62 @@
 /* Sistem tercihi (kullanıcı açık/koyu seçmediyse) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --ink-900: #F2F4F8;
-    --ink-700: #C9D1DE;
-    --ink-500: #8E9AAC;
-    --ink-300: #5F6B7D;
+    --bg: #0A111E;
+    --bg-deep: #070C16;
+    --surface: rgba(237, 227, 208, .022);
+    --surface-2: rgba(237, 227, 208, .05);
+    --surface-3: rgba(237, 227, 208, .08);
 
-    --bg: #070A11;
-    --surface: #121926;
-    --surface-2: #19212F;
-    --surface-3: #212B3B;
-    --line: #232D3E;
-    --line-strong: #303B4E;
+    --line: rgba(237, 227, 208, .11);
+    --line-strong: rgba(237, 227, 208, .20);
+    --hair: rgba(237, 227, 208, .08);
 
-    --navy: #1B2B47;
-    --navy-soft: #24375A;
-    --gold: #D9BA6E;
-    --gold-text: #D9BA6E;
-    --gold-soft: #2A2418;
-    --gold-line: rgba(217, 186, 110, .34);
-    --sage: #6DA08C;
+    --ink-900: #EDE3D0;
+    --ink-700: #B4AA97;
+    --ink-500: #8A8271;
+    --ink-300: #5E5849;
+
+    --navy: #14203A;
+    --navy-soft: #1D2C4A;
+    --gold: #C9A961;
+    --gold-text: #C9A961;
+    --gold-line: rgba(201, 169, 97, .30);
+    --gold-soft: rgba(201, 169, 97, .09);
+    --sage: #7FA894;
     --clay: #C98268;
 
-    --on-navy: #F2F4F8;
-    --on-navy-dim: rgba(242, 244, 248, .60);
+    --on-navy: #EDE3D0;
+    --on-navy-dim: rgba(237, 227, 208, .58);
 
-    --shadow-1: 0 1px 2px rgba(0, 0, 0, .34), 0 8px 22px rgba(0, 0, 0, .26);
-    --shadow-2: 0 16px 48px rgba(0, 0, 0, .55);
-    --shadow-sheet: 0 -10px 64px rgba(0, 0, 0, .62);
-    --card-hi: inset 0 1px 0 rgba(255, 255, 255, .055);
-    --edge: inset 0 0 0 1px rgba(255, 255, 255, .012);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, .30), 0 10px 28px rgba(0, 0, 0, .22);
+    --shadow-2: 0 18px 52px rgba(0, 0, 0, .55);
+    --shadow-sheet: 0 -10px 64px rgba(0, 0, 0, .66);
+    --card-hi: none;
 
-    --glass: rgba(9, 13, 21, .76);
-    --glass-line: rgba(255, 255, 255, .08);
+    --glass: rgba(10, 17, 30, .82);
+    --glass-line: rgba(237, 227, 208, .10);
 
     color-scheme: dark;
   }
 }
 
 /* ============================================================
-   GECE OKUMA MODU — sadece Kur'an okuyucusunda
+   GECE OKUMA MODU — Kur'an okuyucusuna özel
    ============================================================ */
 :root[data-night="1"] .reader {
-  --bg: #05070C;
-  --surface: #0A0E16;
-  --surface-2: #0E131D;
-  --line: #1A2130;
-  --ink-900: #E7E3D8;
-  --ink-700: #B6B0A2;
-  --ink-500: #7C7768;
-  --gold: rgba(200, 165, 87, .55);
+  --bg: #05080F;
+  --surface: rgba(237, 227, 208, .015);
+  --surface-2: rgba(237, 227, 208, .035);
+  --line: rgba(237, 227, 208, .08);
+  --ink-900: #E4DAC6;
+  --ink-700: #9A9280;
+  --ink-500: #6E6857;
+  --gold: rgba(201, 169, 97, .62);
 }
 
 /* ============================================================
-   RAMAZAN — palet değişmez, sadece altın üst ışık eklenir
+   RAMAZAN — palet değişmez, altın hat biraz güçlenir
    ============================================================ */
 :root[data-ramadan="1"] {
-  --gold-line: rgba(200, 165, 87, .5);
+  --gold-line: rgba(201, 169, 97, .42);
 }

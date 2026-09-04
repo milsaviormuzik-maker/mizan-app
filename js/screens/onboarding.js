@@ -21,9 +21,14 @@ export function mountOnboarding(host, done) {
     <div class="onb">
       <div class="onb__slide is-on" data-slide="0">
         <div class="onb__brand">
-          <div style="position:relative">${logoMark(216)}</div>
-          <p style="font-size:15px;color:rgba(246,242,233,.66);margin-top:6px;position:relative">Günün, ibadetin, dengen.</p>
-          <div style="position:absolute;left:26px;right:26px;bottom:44px">
+          <div class="onb__medallion" aria-hidden="true"></div>
+          <div class="onb__lockup">
+            <span class="onb__mark">${logo(96, '#EDE3D0', '#C9A961')}</span>
+            <p class="onb__name">Mizan</p>
+            <span class="onb__rule" aria-hidden="true"></span>
+            <p class="onb__tag">Günün, ibadetin, dengen.</p>
+          </div>
+          <div class="onb__cta">
             <button class="btn btn--gold btn--block" data-act="next">Başla</button>
           </div>
         </div>
@@ -31,7 +36,7 @@ export function mountOnboarding(host, done) {
 
       <div class="onb__slide" data-slide="1">
         <div class="onb__hero">
-          <span style="color:var(--navy)">${icon('location', 34)}</span>
+          <span style="color:var(--gold)">${icon('location', 34)}</span>
           <h2 class="t-h1" style="margin-top:20px">Konum</h2>
           <p class="t-body" style="margin-top:10px;color:var(--ink-700);max-width:300px">
             Doğru namaz vakitlerini ve kıble yönünü gösterebilmemiz için konumuna ihtiyacımız var.
@@ -47,7 +52,7 @@ export function mountOnboarding(host, done) {
 
       <div class="onb__slide" data-slide="2">
         <div class="onb__hero" style="min-height:150px">
-          <span style="color:var(--navy)">${icon('bell', 34)}</span>
+          <span style="color:var(--gold)">${icon('bell', 34)}</span>
           <h2 class="t-h1" style="margin-top:20px">Hatırlatma</h2>
           <p class="t-body" style="margin-top:10px;color:var(--ink-700)">
             Hangi vakitlerde hatırlatmamızı istersin? Sonradan her vakti ayrı ayrı ayarlayabilirsin.
@@ -68,7 +73,7 @@ export function mountOnboarding(host, done) {
 
       <div class="onb__slide" data-slide="3">
         <div class="onb__hero" style="min-height:130px">
-          <span style="color:var(--navy)">${icon('book', 34)}</span>
+          <span style="color:var(--gold)">${icon('book', 34)}</span>
           <h2 class="t-h1" style="margin-top:20px">Kur’an</h2>
           <p class="t-body" style="margin-top:10px;color:var(--ink-700)">
             Hangi meali okumak istersin?

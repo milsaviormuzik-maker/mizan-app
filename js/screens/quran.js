@@ -184,7 +184,7 @@ function khatmPanel() {
     const done = j.no <= k.juzDone;
     return `
       <button class="row-item" data-act="open-ayah" data-s="${j.start.surah}" data-a="${j.start.ayah}">
-        <span class="row-item__num" style="${done ? 'background:var(--gold-soft);color:#7A6220' : ''}">${j.no}</span>
+        <span class="row-item__num" style="${done ? 'background:var(--gold-soft);border-color:var(--gold-line);color:var(--gold-text)' : ''}">${j.no}</span>
         <span class="row-item__main">
           <span class="row-item__title" style="display:block">${j.no}. Cüz</span>
           <span class="row-item__sub">${esc(j.startLabel)}</span>
