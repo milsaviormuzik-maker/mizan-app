@@ -10,13 +10,14 @@ import { go } from '../core/router.js';
 import { SURAHS, JUZ, surahName, surahByNo, juzOf, MEALS } from '../data/quran-surahs.js';
 import { VERSES, verseAt, searchVerses } from '../data/quran-verses.js';
 import { segment, empty } from './_blocks.js';
-import { openVerseMenu, sharedActions } from './_actions.js';
+import { openNote, openVerseMenu, sharedActions } from './_actions.js';
 
 const TABS = [
   { id: 'sureler', name: 'Sureler' },
   { id: 'cuzler', name: 'Cüzler' },
   { id: 'kayitli', name: 'Kayıtlı' },
   { id: 'imler', name: 'Yer İmleri' },
+  { id: 'notlar', name: 'Notlar' },
   { id: 'hatim', name: 'Hatim' }
 ];
 
@@ -111,6 +112,29 @@ function juzList() {
 /* ------------------------------------------------------------
    Kayıtlı âyetler / Yer imleri
    ------------------------------------------------------------ */
+/* Notlar — âyetin meali ve notun kendisi bir arada. Notlar cihazda kalır. */
+function noteList() {
+  const girdiler = Object.entries(state.quran.notes);
+  if (!girdiler.length) {
+    return empty('Henüz not almadın. Okurken bir âyetin yanındaki kalem simgesine dokunarak not bırakabilirsin.');
+  }
+  return `<div class="stack" style="margin-top:18px">
+    ${girdiler.map(([ref, metin]) => {
+    const [s, a] = ref.split(':').map(Number);
+    const v = verseAt(s, a);
+    return `
+      <section class="card card--tap" data-act="open-ayah" data-s="${s}" data-a="${a}">
+        <div class="row-between" style="margin-bottom:12px">
+          <span class="badge">${esc(surahName(s))} ${a}</span>
+          <button class="ayah__tool" data-act="note-edit" data-ref="${ref}" aria-label="Notu düzenle">${icon('edit', 16)}</button>
+        </div>
+        ${v ? `<p class="t-body" style="color:var(--ink-700)">${esc(v.tr)}</p>` : ''}
+        <p class="ayah__note" style="margin-top:12px">${esc(metin)}</p>
+      </section>`;
+  }).join('')}
+  </div>`;
+}
+
 function refList(refs, emptyText) {
   if (!refs.length) return empty(emptyText);
   return `<div class="stack" style="margin-top:18px">
@@ -247,6 +271,10 @@ export const quranScreen = {
           e.stopPropagation();
           openVerseMenu(n.dataset.ref, { onChange: () => repaint(root) });
           break;
+        case 'note-edit':
+          e.stopPropagation();
+          openNote(n.dataset.ref, () => repaint(root));
+          break;
         case 'start-khatm': startKhatm(root); break;
         case 'khatm-new': startKhatm(root); break;
         case 'khatm-inc':
@@ -277,7 +305,8 @@ function repaint(root, scrollReset = false) {
       : activeTab === 'cuzler' ? juzList()
         : activeTab === 'kayitli' ? refList(state.quran.saved, 'Henüz âyet kaydetmedin. Okurken bir âyete uzun basarak kaydedebilirsin.')
           : activeTab === 'imler' ? refList(state.quran.bookmarks, 'Yer imin yok. Okurken kaldığın yeri işaretleyebilirsin.')
-            : khatmPanel();
+            : activeTab === 'notlar' ? noteList()
+              : khatmPanel();
 
   if (scrollReset) $('[data-scroll]', root)?.scrollTo({ top: 0, behavior: 'smooth' });
 }

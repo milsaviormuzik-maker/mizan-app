@@ -19,7 +19,8 @@ const TOOLS = [
   { path: '/ibadet/tesbih', ic: 'beads', name: 'Dijital Tesbih', sub: 'Zikir ve sayaç' },
   { path: '/ibadet/zekat', ic: 'calculator', name: 'Zekât Hesaplayıcı', sub: 'Nisap ve tahmini tutar' },
   { path: '/ibadet/takip', ic: 'chart', name: 'Kaza ve Takip', sub: 'İstersen kapatabilirsin' },
-  { path: '/ibadet/takvim', ic: 'calendar', name: 'Dini Takvim', sub: 'Hicri takvim ve kandiller' }
+  { path: '/ibadet/takvim', ic: 'calendar', name: 'Dini Takvim', sub: 'Hicri takvim ve kandiller' },
+  { path: '/ibadet/camiler', ic: 'mosque', name: 'Yakındaki Camiler', sub: 'Konum izniyle çalışır' }
 ];
 
 export const worshipScreen = {

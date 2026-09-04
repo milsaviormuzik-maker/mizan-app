@@ -119,6 +119,7 @@ function paint(root) {
       ${listRow({ title: 'Hatim ilerlemesi', value: k ? `${k.juzDone} / 30 cüz` : 'Yok', act: 'saved' })}
       ${listRow({ title: 'Kaydedilen âyetler', value: String(q.saved.length), act: 'saved' })}
       ${listRow({ title: 'Yer imleri', value: String(q.bookmarks.length), act: 'saved' })}
+      ${listRow({ title: 'Notlar', value: String(Object.keys(q.notes).length), act: 'saved' })}
     </div>
 
     <p class="section-title">İbadet</p>

@@ -33,7 +33,7 @@ export const qiblaScreen = {
 
             <p class="t-cap">${esc(state.user.city)} · KÂBE'YE ${trNumber(dist)} KM</p>
 
-            <div style="position:relative;width:288px;height:288px;margin-top:26px" data-compass>
+            <div style="position:relative;width:288px;height:288px;margin-top:26px;overflow:clip" data-compass>
               <!-- Sabit dış halka -->
               <svg viewBox="0 0 288 288" width="288" height="288" style="position:absolute;inset:0">
                 <circle cx="144" cy="144" r="139" fill="none" stroke="var(--line)" stroke-width="1"/>

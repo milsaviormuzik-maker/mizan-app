@@ -679,3 +679,88 @@
 .card { border-color: var(--line-strong); }
 .card--flush { border-color: var(--line); }
 .list { border-color: var(--line-strong); }
+
+/* ============================================================
+   YENİ BÖLÜMLER — Esmâ, not, cami
+   ============================================================ */
+
+/* ---------------- Esmâ-i Hüsnâ ızgarası ----------------
+   Üç sütun: isim kısa, Arapça hattın nefes alması gerekiyor. */
+.esma-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+.esma {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px;
+  min-height: 108px;
+  padding: 16px 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: transparent;
+  text-align: center;
+  transition: border-color 180ms, transform 120ms ease-out;
+}
+.esma:hover { border-color: var(--gold-line); }
+.esma:active { transform: scale(.97); }
+.esma__no {
+  position: absolute; top: 7px; left: 9px;
+  font-family: var(--font-serif);
+  font-size: 11px; color: var(--ink-300);
+  font-variant-numeric: tabular-nums;
+}
+.esma__ar {
+  font-size: 21px; line-height: 1.7;
+  color: color-mix(in srgb, var(--gold) 66%, var(--ink-900));
+}
+.esma__tr {
+  font-family: var(--font-serif);
+  font-size: 13px; font-weight: 450; line-height: 1.3;
+  color: var(--ink-700);
+}
+
+/* ---------------- Âyet notu ----------------
+   Notun kendisi âyetin altında, altın hatla ayrılmış olarak durur. */
+.ayah__note {
+  margin-top: 14px;
+  padding: 11px 14px;
+  border-left: 2px solid var(--gold-line);
+  background: var(--surface);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-family: var(--font-serif);
+  font-size: 14.5px; line-height: 1.6;
+  color: var(--ink-700);
+  white-space: pre-wrap;
+}
+.not-alani {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--ink-900);
+  font-family: var(--font-serif);
+  font-size: 16px; line-height: 1.6;
+  resize: vertical;
+}
+.not-alani:focus { outline: none; border-color: var(--gold-line); }
+.not-alani::placeholder { color: var(--ink-300); }
+
+/* ---------------- Kod bloğu (ne gönderiliyor) ----------------
+   Gönderilen isteğin birebir kendisi; okunabilir olmalı. */
+.kod-blok {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px; line-height: 1.6;
+  color: var(--ink-700);
+  overflow-x: auto;
+  white-space: pre;
+}

@@ -31,6 +31,9 @@ import { askScreen } from './screens/ask.js';
 import { ramadanScreen } from './screens/ramadan.js';
 import { profileScreen, applyTheme } from './screens/profile.js';
 import { widgetScreen } from './screens/widgets.js';
+import { mosquesScreen } from './screens/mosques.js';
+import { esmaScreen } from './screens/esma.js';
+import { ruyaScreen } from './screens/ruya.js';
 import { mountOnboarding } from './screens/onboarding.js';
 
 /* ------------------------------------------------------------
@@ -107,6 +110,7 @@ function registerRoutes() {
   defineRoute({ path: '/ibadet/zekat', tab: 'ibadet', mod: zakatScreen });
   defineRoute({ path: '/ibadet/takip', tab: 'ibadet', mod: trackingScreen });
   defineRoute({ path: '/ibadet/takvim', tab: 'ibadet', mod: calendarScreen });
+  defineRoute({ path: '/ibadet/camiler', tab: 'ibadet', mod: mosquesScreen });
 
   defineRoute({ path: '/kesfet', tab: 'kesfet', root: true, mod: exploreScreen });
   defineRoute({ path: '/kesfet/sor', tab: 'kesfet', mod: askScreen });
@@ -117,6 +121,8 @@ function registerRoutes() {
   defineRoute({ path: '/kesfet/hac', tab: 'kesfet', mod: hajjScreen });
   defineRoute({ path: '/kesfet/ogren', tab: 'kesfet', mod: learnScreen });
   defineRoute({ path: '/kesfet/ramazan', tab: 'kesfet', mod: ramadanScreen });
+  defineRoute({ path: '/kesfet/esma', tab: 'kesfet', mod: esmaScreen });
+  defineRoute({ path: '/kesfet/ruya', tab: 'kesfet', mod: ruyaScreen });
 
   defineRoute({ path: '/profil', tab: 'profil', root: true, mod: profileScreen });
   defineRoute({ path: '/widget', tab: 'profil', mod: widgetScreen });

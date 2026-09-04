@@ -125,6 +125,7 @@ export function openVerseMenu(ref, opts = {}) {
   const [s, a] = parseRef(ref);
   const saved = state.quran.saved.includes(ref);
   const marked = state.quran.bookmarks.includes(ref);
+  const notu = state.quran.notes[ref];
 
   const item = (act, ic, label, on) => `
     <button class="row-item" data-act="${act}" data-ref="${ref}">
@@ -139,6 +140,7 @@ export function openVerseMenu(ref, opts = {}) {
       ${item('menu-wbw', 'text', 'Kelime kelime meal')}
       ${item('menu-save', 'save', saved ? 'Kayıtlardan çıkar' : 'Kaydet', saved)}
       ${item('menu-bookmark', 'bookmark', marked ? 'Yer imini kaldır' : 'Yer imi ekle', marked)}
+      ${item('menu-note', 'edit', notu ? 'Notu düzenle' : 'Not al', !!notu)}
       ${item('menu-share', 'share', 'Paylaş')}
       ${item('menu-copy', 'copy', 'Metni kopyala')}
     </div>`);
@@ -151,6 +153,7 @@ export function openVerseMenu(ref, opts = {}) {
     if (act === 'menu-wbw') { openWordByWord(ref); return; }
     if (act === 'menu-save') { toggleSaveVerse(ref); closeSheet(); opts.onChange?.(); return; }
     if (act === 'menu-bookmark') { toggleBookmark(ref); closeSheet(); opts.onChange?.(); return; }
+    if (act === 'menu-note') { openNote(ref, opts.onChange); return; }
     if (act === 'menu-share') { shareVerse(ref); closeSheet(); return; }
     if (act === 'menu-copy') {
       const v = verseAt(s, a);
@@ -158,6 +161,48 @@ export function openVerseMenu(ref, opts = {}) {
       toast('Kopyalandı.'); closeSheet(); return;
     }
     if (act === 'menu-listen') { closeSheet(); opts.onListen?.(a); return; }
+  });
+}
+
+/* ---------------- Âyet notu ----------------
+   Not cihazda kalır; hesap açılmadıkça hiçbir yere gitmez.
+   Boş kaydetmek notu siler — ayrı bir "sil" düğmesine gerek yok. */
+export function openNote(ref, onChange) {
+  const [s, a] = parseRef(ref);
+  const mevcut = state.quran.notes[ref] ?? '';
+
+  const body = openSheet(`Not — ${surahName(s)} ${a}`, `
+    <p class="t-sec">Bu not yalnızca senin cihazında saklanır.</p>
+    <textarea class="not-alani" data-note rows="6"
+      placeholder="Bu âyet hakkında aklında kalanı yaz…">${esc(mevcut)}</textarea>
+    <div class="row gap-8" style="margin-top:14px">
+      <button class="btn btn--primary grow" data-act="note-save">Kaydet</button>
+      ${mevcut ? '<button class="btn btn--secondary" data-act="note-del">Sil</button>' : ''}
+    </div>`);
+
+  const alan = body.querySelector('[data-note]');
+  alan.focus();
+  alan.setSelectionRange(alan.value.length, alan.value.length);
+
+  body.addEventListener('click', (e) => {
+    const n = e.target.closest('[data-act]');
+    if (!n) return;
+    if (n.dataset.act === 'note-save') {
+      const metin = alan.value.trim();
+      if (metin) state.quran.notes[ref] = metin;
+      else delete state.quran.notes[ref];
+      commit('note');
+      closeSheet();
+      toast(metin ? 'Not kaydedildi.' : 'Not silindi.');
+      onChange?.();
+    }
+    if (n.dataset.act === 'note-del') {
+      delete state.quran.notes[ref];
+      commit('note');
+      closeSheet();
+      toast('Not silindi.');
+      onChange?.();
+    }
   });
 }
 

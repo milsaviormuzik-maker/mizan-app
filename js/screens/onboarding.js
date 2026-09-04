@@ -39,7 +39,8 @@ export function mountOnboarding(host, done) {
           <h2 class="t-h1" style="margin-top:20px">Konum</h2>
           <p class="t-body" style="margin-top:10px;color:var(--ink-700);max-width:300px">
             Doğru namaz vakitlerini ve kıble yönünü gösterebilmemiz için konumuna ihtiyacımız var.
-            Konumun cihazından dışarı çıkmaz.
+            Bunlar cihazında hesaplanır; konumun bunun için dışarı çıkmaz. Yalnızca
+            “Yakındaki Camiler”i açarsan konumun yaklaşık olarak sorgulanır — o da ayrı bir izinle.
           </p>
         </div>
         <div class="col gap-8">

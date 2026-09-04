@@ -61,9 +61,11 @@ export const exploreScreen = {
             <div class="list">
               ${[
         ['/kesfet/dualar', 'save', 'Dualar', `${DUAS.length} dua · ${DUA_CATEGORIES.length} kategori`],
+        ['/kesfet/esma', 'sparkle', 'Esmâ-i Hüsnâ', '99 isim · anlamlarıyla'],
         ['/kesfet/hadisler', 'book', 'Hadisler', `${HADITHS.length} hadis · kaynaklarıyla`],
         ['/kesfet/bilgiler', 'info', 'Dini Bilgiler', `${INFO_ARTICLES.length} konu · abdest, namaz, oruç, zekât`],
         ['/kesfet/hac', 'kaaba', 'Hac ve Umre Rehberi', 'İhramdan veda tavafına 7 adım'],
+        ['/kesfet/ruya', 'moon', 'Rüya', 'Hadislerde rüya · tabir yok'],
         ['/kesfet/ogren', 'text', 'Kur’an Öğren', 'Elif-Bâ ve tecvid']
       ].map(([path, ic, name, sub]) => `
                 <button class="row-item" data-act="go" data-path="${path}">

@@ -327,7 +327,8 @@ export const INFO_CATEGORIES = [
   { id: 'abdest', name: 'Abdest' }, { id: 'namaz', name: 'Namaz' },
   { id: 'oruc', name: 'Oruç' }, { id: 'zekat', name: 'Zekât' },
   { id: 'hac', name: 'Hac' }, { id: 'gunluk', name: 'Günlük Hayat' },
-  { id: 'ahlak', name: 'Ahlâk' }, { id: 'kuran', name: 'Kur’an' }
+  { id: 'ahlak', name: 'Ahlâk' }, { id: 'kuran', name: 'Kur’an' },
+  { id: 'ruya', name: 'Rüya' }
 ];
 
 /** a(id, kategori, başlık, özet, gövde[], kaynaklar[]) */
@@ -487,6 +488,55 @@ export const INFO_ARTICLES = [
       'Camiye erken gitmek, gusül almak ve güzel koku sürünmek sünnettir.'
     ],
     ['Cum’a 9–10', 'Diyanet İşleri Başkanlığı, İlmihal, I/303–316']),
+
+  /* ---- RÜYA ----
+     Bu bölüm yalnızca rivayete dayanan kısmı anlatır. Sembol yorumu
+     ("suda yüzmek şu demektir") uygulamada YOKTUR ve olmayacaktır:
+     bkz. 'ruya-tabir' maddesi — gerekçe orada açıkça yazıyor. */
+  a('ruya-cesitleri', 'ruya', 'Rüya Çeşitleri',
+    'Hadislerde rüyanın üç kaynağı ayrılır.',
+    [
+      'Hz. Peygamber rüyayı üçe ayırmıştır: Allah’tan olan sâliha (doğru) rüya, kişinin kendi kendine konuşması yani gün içindeki meşguliyetlerinin uykuya yansıması, ve şeytandan gelen üzücü rüya.',
+      'Bu ayrım, her rüyanın bir anlam taşımadığını gösterir. Görülen şeyin çoğu, zihnin gün içinde meşgul olduğu şeylerin devamıdır.',
+      'Sâliha rüyanın peygamberliğin kırk altı cüzünden biri olduğu bildirilmiştir. Âlimler bunu, doğru rüyanın gaybden küçük bir işaret taşıyabileceği ama vahiy olmadığı şeklinde açıklar.',
+      'Rüya dinî bir delil değildir. Hüküm kaynağı Kur’an ve sünnettir; rüyayla ne helâl haram olur ne haram helâl.'
+    ],
+    ['Buhârî, Ta’bîr 26; Müslim, Rüyâ 6', 'Buhârî, Ta’bîr 2; Müslim, Rüyâ 6',
+      'Diyanet İşleri Başkanlığı, İlmihal — İman ve Gayb']),
+
+  a('ruya-guzel', 'ruya', 'Güzel Bir Rüya Görünce',
+    'Hamd etmek, hayra yormak ve anlatırken seçici olmak.',
+    [
+      'Hoşuna giden bir rüya gördüğünde bunun Allah’tan olduğu düşünülür ve O’na hamd edilir.',
+      'Rüya hayra yorulur. Hz. Peygamber rüyanın, ilk yorumlandığı şekilde gerçekleşme eğiliminde olduğunu bildirmiştir; bu yüzden acele ve kötü yorumdan kaçınılır.',
+      'Rüya herkese değil, seven ve bilen kimseye anlatılır.',
+      'Rüyayı görmediği hâlde gördüm diye anlatmak ağır bir şekilde uyarılmıştır.'
+    ],
+    ['Buhârî, Ta’bîr 3; Müslim, Rüyâ 3', 'Tirmizî, Rüyâ 6; Ebû Dâvûd, Edeb 88',
+      'Buhârî, Ta’bîr 45']),
+
+  a('ruya-kotu', 'ruya', 'Kötü Bir Rüya Görünce',
+    'Korkmaya gerek yok; yapılacak şey rivayette bellidir.',
+    [
+      'Hoşuna gitmeyen bir rüya gördüğünde bunun şeytandan olduğu kabul edilir.',
+      'Sol tarafa hafifçe üç kez üflenir ve şeytanın şerrinden Allah’a sığınılır.',
+      'Yattığın yandan öbür yana dönülür; dilersen kalkıp namaz kılınır.',
+      'Rüya KİMSEYE anlatılmaz. Rivayette, böyle yapıldığında rüyanın zarar vermeyeceği bildirilmiştir.',
+      'Kötü rüya bir ceza ya da kötü haber işareti değildir. Uykuda görülen şeyden ötürü kimse suçlu ya da uğursuz sayılmaz.'
+    ],
+    ['Buhârî, Ta’bîr 3, 46; Müslim, Rüyâ 4–5', 'Tirmizî, Rüyâ 4']),
+
+  a('ruya-tabir', 'ruya', 'Mizan Neden Rüya Yorumlamıyor?',
+    'Bu bir eksik değil, bilinçli bir karar.',
+    [
+      'Rüya tabiri dinî bir hüküm değildir. Kur’an ve sünnette rüyanın kaynakları ve görülünce ne yapılacağı anlatılır; ancak bir sembol sözlüğü verilmez.',
+      'Yaygın tabirnamelerin çoğu İbn Sîrîn’e nispet edilir. Ancak bu eserlerin ona aidiyeti ilim çevrelerinde tartışmalıdır; içerikleri farklı dönemlerde eklenmiştir.',
+      'Diyanet İşleri Başkanlığı rüya tabiri hizmeti vermez ve rüya yorumunun ticarî bir faaliyete dönüştürülmesine karşı uyarır.',
+      'Mizan’ın kuralı nettir: kaynaksız hiçbir dinî bilgi verilmez. Bir sembolün karşılığı doğrulanabilir bir kaynağa dayandırılamadığı için uygulama kimsenin rüyasını yorumlamaz.',
+      'Rüyan seni gerçekten meşgul ediyorsa, onu tanıdığın ve ilmine güvendiğin bir kişiyle konuşman uygun olur. Sürekli sıkıntı veriyorsa bu bir uyku sağlığı meselesi de olabilir; bir hekime danışmak yerinde olur.'
+    ],
+    ['Yûsuf 6, 43–49 — rüya tabiri Kur’an’da bir peygambere verilen özel bilgi olarak anlatılır',
+      'Buhârî, Ta’bîr 45', 'DİB Din İşleri Yüksek Kurulu — rüya ve tabiri hakkında açıklamalar']),
 
   a('teravih', 'oruc', 'Teravih Namazı',
     'Ramazan gecelerine mahsus sünnet namaz.',

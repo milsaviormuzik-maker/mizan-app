@@ -39,7 +39,10 @@ const DEFAULTS = {
     nightReading: false,
     ramadanPreview: false,      // Ramazan modunu elle önizleme
     contentNotify: true,
-    hijriOffset: 0
+    hijriOffset: 0,
+    // Yakındaki camiler için konum paylaşımı — VARSAYILAN KAPALI.
+    // Uygulamadaki tek dış istektir; kullanıcı açıkça izin vermeden yapılmaz.
+    mosqueLookup: false
   },
   prayer: {
     method: 'diyanet',
@@ -62,7 +65,8 @@ const DEFAULTS = {
     showMeal: true,
     showTranslit: false,
     bookmarks: [],              // ['2:255', ...]
-    saved: []                   // ['2:255', ...]
+    saved: [],                  // ['2:255', ...]
+    notes: {}                   // { '2:255': 'not metni' }
   },
   khatm: {
     active: { startedAt: '2026-08-04', targetDays: 30, juzDone: 12 },

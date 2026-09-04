@@ -9,7 +9,7 @@ import { state, commit } from '../core/state.js';
 import { back } from '../core/router.js';
 import { SURAHS, surahByNo, juzOf, MEALS, RECITERS, ARABIC_FONTS, ayahAudioSources } from '../data/quran-surahs.js';
 import { VERSES } from '../data/quran-verses.js';
-import { openVerseMenu, intent } from './_actions.js';
+import { openVerseMenu, openNote, intent } from './_actions.js';
 import * as player from '../core/player.js';
 import { empty, switchRow } from './_blocks.js';
 
@@ -24,6 +24,7 @@ function ayahHtml(surah, v) {
   const q = state.quran;
   const saved = q.saved.includes(ref);
   const marked = q.bookmarks.includes(ref);
+  const notu = q.notes[ref];
   return `
   <article class="ayah" id="ayah-${v.n}" data-ayah="${v.n}" data-ref="${ref}">
     <div class="ayah__head">
@@ -31,6 +32,7 @@ function ayahHtml(surah, v) {
       <div class="ayah__tools">
         <button class="ayah__tool" data-act="a-play" data-ayah="${v.n}" aria-label="Bu âyetten dinle">${icon('play', 16)}</button>
         <button class="ayah__tool ${marked ? 'is-on' : ''}" data-act="a-bookmark" data-ref="${ref}" aria-label="Yer imi">${icon('bookmark', 16)}</button>
+        <button class="ayah__tool ${notu ? 'is-on' : ''}" data-act="a-note" data-ref="${ref}" aria-label="Not">${icon('edit', 16)}</button>
         <button class="ayah__tool ${saved ? 'is-on' : ''}" data-act="a-save" data-ref="${ref}" aria-label="Kaydet">${icon('save', 16)}</button>
         <button class="ayah__tool" data-act="a-menu" data-ref="${ref}" aria-label="Seçenekler">${icon('more', 16)}</button>
       </div>
@@ -172,6 +174,10 @@ export const readerScreen = {
           toast(i < 0 ? 'Yer imi eklendi.' : 'Yer imi kaldırıldı.');
           break;
         }
+        case 'a-note': {
+          openNote(n.dataset.ref, () => { refreshMarks(root); paintNotes(root); });
+          break;
+        }
         case 'a-menu':
           openVerseMenu(n.dataset.ref, {
             onChange: () => refreshMarks(root),
@@ -220,6 +226,7 @@ export const readerScreen = {
   },
 
   onShow(root, params) {
+    paintNotes(root);          // notlar her dönüşte tazelensin
     const ayah = Math.max(1, Number(params?.ayah) || 1);
     state.quran.lastRead = { surah: current.surah, ayah };
     commit('lastRead');
@@ -265,6 +272,23 @@ function refreshMarks(root) {
     const ref = a.dataset.ref;
     $('[data-act="a-save"]', a)?.classList.toggle('is-on', state.quran.saved.includes(ref));
     $('[data-act="a-bookmark"]', a)?.classList.toggle('is-on', state.quran.bookmarks.includes(ref));
+    $('[data-act="a-note"]', a)?.classList.toggle('is-on', !!state.quran.notes[ref]);
+  });
+}
+
+/* Notu olan âyetin altına notun kendisi yazılır: kullanıcı ne yazdığını
+   görmek için menü açmak zorunda kalmasın. */
+function paintNotes(root) {
+  $$('.ayah', root).forEach((a) => {
+    const metin = state.quran.notes[a.dataset.ref];
+    let kutu = $('.ayah__note', a);
+    if (!metin) { kutu?.remove(); return; }
+    if (!kutu) {
+      kutu = document.createElement('p');
+      kutu.className = 'ayah__note';
+      a.append(kutu);
+    }
+    kutu.textContent = metin;
   });
 }
 
