@@ -187,6 +187,9 @@ function openDay(date) {
         </div>
         <p class="t-h3" style="margin-top:10px">${esc(ev.name)}</p>
         ${ev.desc ? `<p class="t-body" style="margin-top:7px;color:var(--ink-700)">${esc(ev.desc)}</p>` : ''}
+        ${ev.eve ? `<p class="rivayet-not">
+          ${esc(ev.geceNotu)} Yani <strong>${esc(trDate(ev.eve))}</strong> akşamı.
+        </p>` : ''}
       </section>` : `
       <p class="t-sec" style="margin-top:18px">Bu güne ait özel bir dini gün kaydı yok.</p>
       ${next ? `<p class="t-sec" style="margin-top:8px">

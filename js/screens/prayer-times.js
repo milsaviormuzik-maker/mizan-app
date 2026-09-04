@@ -39,6 +39,22 @@ export const prayerTimesScreen = {
       { id: 'gunluk', name: 'Günlük' }, { id: 'haftalik', name: 'Haftalık' }, { id: 'aylik', name: 'Aylık' }
     ], view, 'view')}
             <div data-panel></div>
+
+            <div class="not-kutusu" style="margin-top:22px">
+              <p class="not-kutusu__baslik">Vakitler nasıl hesaplanıyor?</p>
+              <p class="not-kutusu__metin">
+                Bu vakitler cihazında, güneşin bulunduğun konumdaki konumuna göre hesaplanır;
+                bir sunucudan indirilmez. Yöntem olarak Diyanet’in kullandığı açılar
+                (imsak 18°, yatsı 17°) ve ihtiyat dakikaları esas alınır.
+              </p>
+              <p class="not-kutusu__metin">
+                Yine de sonuç, <strong>Diyanet’in resmî takviminden birkaç dakika
+                farklı çıkabilir</strong>: resmî takvim şehir merkezleri için ayrıca
+                düzenlenir. Oruç ve namaz gibi vaktin kritik olduğu durumlarda bağlayıcı
+                olan Diyanet’in yayımladığı takvimdir. Aradaki farkı ayarlardan
+                “Dakika Düzeltmesi” ile kapatabilirsin.
+              </p>
+            </div>
           </div>
         </div>
       </div>`);

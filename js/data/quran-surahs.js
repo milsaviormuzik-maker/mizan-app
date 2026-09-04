@@ -43,7 +43,7 @@ const RAW = [
   [37, 'الصافات', 'Sâffât', 'Saf Tutanlar', 182, 'Mekke'],
   [38, 'ص', 'Sâd', 'Sâd', 88, 'Mekke'],
   [39, 'الزمر', 'Zümer', 'Topluluklar', 75, 'Mekke'],
-  [40, 'غافر', 'Mü’min', 'Bağışlayan', 85, 'Mekke'],
+  [40, 'غافر', 'Mü’min', 'Gâfir · Bağışlayan', 85, 'Mekke'],
   [41, 'فصلت', 'Fussilet', 'Ayrıntılı Kılındı', 54, 'Mekke'],
   [42, 'الشورى', 'Şûrâ', 'Danışma', 53, 'Mekke'],
   [43, 'الزخرف', 'Zuhruf', 'Süs', 89, 'Mekke'],

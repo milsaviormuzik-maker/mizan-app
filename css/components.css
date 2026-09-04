@@ -521,6 +521,41 @@
 .ring__fill { fill: none; stroke: var(--gold); stroke-linecap: round; transition: stroke-dashoffset 900ms var(--ease); }
 .atmos .ring__fill { stroke: var(--atmos-accent); }
 
+/* ---------------- Bilgilendirme kutusu ----------------
+   Hesaplamanın sınırlarını ve resmî kaynağı söylediğimiz yer.
+   Kullanıcıyı korkutmaz; ne yaptığımızı açıkça anlatır. */
+.not-kutusu {
+  padding: 16px 17px;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-md);
+}
+.not-kutusu__baslik {
+  font-family: var(--font-serif);
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold-text);
+  margin-bottom: 10px;
+}
+.not-kutusu__metin {
+  font-family: var(--font-serif);
+  font-size: 14.5px; line-height: 1.62;
+  color: var(--ink-700);
+}
+.not-kutusu__metin + .not-kutusu__metin { margin-top: 10px; }
+.not-kutusu strong { font-weight: 600; color: var(--ink-900); }
+
+/* ---------------- Rivayet notu ----------------
+   Yaygın ama senedi zayıf sayılan rivayetlerde kartın altına düşülür.
+   Uyarı değil, bilgilendirme: kırmızı değil altın hatlı. */
+.rivayet-not {
+  margin-top: 10px;
+  padding: 11px 13px;
+  border-left: 2px solid var(--gold-line);
+  font-family: var(--font-serif);
+  font-size: 13.5px; line-height: 1.55;
+  color: var(--ink-500);
+}
+
 /* ---------------- Marka görselleri ----------------
    Markanın koyu (lacivert gövde) ve açık (fildişi gövde) iki sürümü vardır.
    Hangisinin çizileceğini görselin ÜZERİNDE DURDUĞU zemin belirler; adres

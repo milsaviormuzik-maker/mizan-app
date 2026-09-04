@@ -6,6 +6,13 @@
 
 import { fromHijri, toHijri, HIJRI_MONTHS } from '../core/astro.js';
 
+/* Kandiller GECEDİR. Hicri gün güneş batınca başladığı için "Recep'in 27.
+   gecesi", 26. günün akşamı başlar ve 27. günün sabahına kadar sürer.
+   Bu yüzden kandil kayıtlarında hem hicri GÜN tutulur (takvimde o güne
+   düşer) hem de gecenin hangi akşam başladığı ayrıca verilir — kullanıcı
+   camiye hangi akşam gideceğini tahmin etmek zorunda kalmasın. */
+const GECE_NOTU = 'Kandil gecesi, bu tarihten bir önceki akşam güneş battığında başlar.';
+
 /** [hicri ay, gün, ad, tür, açıklama] */
 const RULES = [
   [1, 1, 'Hicri Yılbaşı', 'gun', 'Muharrem ayının ilk günü; hicri takvimde yeni yılın başlangıcıdır.'],
@@ -36,10 +43,13 @@ function regaibFor(hijriYear) {
     const day = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
     if (day.getDay() === 5) {                          // ilk cuma
       const eve = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1);
+      // Regaib zaten "gece" olarak bulunuyor: perşembeyi cumaya bağlayan akşam.
+      // Alan adları diğer kandillerle aynı olsun diye gün ve akşam ayrı tutulur.
       return {
-        date: eve, name: 'Regaib Kandili', kind: 'kandil',
+        date: day, eve, name: 'Regaib Kandili', kind: 'kandil',
         desc: 'Recep ayının ilk cuma gecesi.',
-        hijri: toHijri(eve)
+        geceNotu: GECE_NOTU,
+        hijri: toHijri(day)
       };
     }
   }
@@ -50,7 +60,13 @@ function regaibFor(hijriYear) {
 export function religiousDaysOf(hijriYear) {
   const out = RULES.map(([hm, hd, name, kind, desc]) => {
     const date = fromHijri(hijriYear, hm, hd);
-    return { date, name, kind, desc, hijri: { year: hijriYear, month: hm, day: hd, monthName: HIJRI_MONTHS[hm - 1] } };
+    // Gecenin başladığı akşam: hicri gün, bir önceki miladi günün akşamı girer
+    const eve = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
+    return {
+      date, name, kind, desc,
+      ...(kind === 'kandil' ? { eve, geceNotu: GECE_NOTU } : {}),
+      hijri: { year: hijriYear, month: hm, day: hd, monthName: HIJRI_MONTHS[hm - 1] }
+    };
   });
   const regaib = regaibFor(hijriYear);
   if (regaib) out.push(regaib);

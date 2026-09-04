@@ -29,8 +29,8 @@ export const DUA_CATEGORIES = [
 /** d(id, kategori, başlık, arapça, okunuş, anlam, kaynak, [sûre, âyet]?)
  *  Son parametre yalnızca Kur'an kaynaklı dualarda bulunur; sesli dinleme
  *  bu referanstan gerçek tilaveti çalar. Hadis kaynaklı dualarda ses yoktur. */
-const d = (id, cat, title, ar, tl, tr, src, ayah = null) =>
-  ({ id, cat, title, ar, tl, tr, src, ayah });
+const d = (id, cat, title, ar, tl, tr, src, ayah = null, derece = null) =>
+  ({ id, cat, title, ar, tl, tr, src, ayah, derece });
 
 export const DUAS = [
   /* --- Sabah --- */
@@ -83,10 +83,13 @@ export const DUAS = [
 
   /* --- Yemek --- */
   d('yemek-1', 'yemek', 'Yemeğe Başlarken',
-    'بِسْمِ اللَّهِ وَعَلَىٰ بَرَكَةِ اللَّهِ',
-    'Bismillâhi ve alâ bereketillâh.',
-    'Allah’ın adıyla ve Allah’ın bereketiyle.',
-    'Ebû Dâvûd, Et’ime 15'),
+    'بِسْمِ اللَّهِ',
+    'Bismillâh.',
+    'Allah’ın adıyla.',
+    'Buhârî, Et’ime 2; Müslim, Eşribe 108', null,
+    'Yaygın olarak eklenen “ve alâ bereketillâh” ilavesinin senedi zayıf kabul edilir; ' +
+    'sahih rivayetlerde yemeğe besmele ile başlanır. Başlarken unutulursa ' +
+    '“bismillâhi evvelehû ve âhirehû” denir.'),
   d('yemek-2', 'yemek', 'Yemekten Sonra',
     'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مِنَ الْمُسْلِمِينَ',
     'El-hamdü lillâhillezî at’amenâ ve sekânâ ve ce’alenâ mine’l-müslimîn.',
@@ -199,7 +202,9 @@ export const DUAS = [
     'اللَّهُمَّ لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَىٰ رِزْقِكَ أَفْطَرْتُ',
     'Allâhümme leke sumtü ve bike âmentü ve aleyke tevekkeltü ve alâ rızkıke eftartü.',
     'Allah’ım! Senin için oruç tuttum, sana iman ettim, sana tevekkül ettim ve senin rızkınla orucumu açtım.',
-    'Ebû Dâvûd, Savm 22'),
+    'Ebû Dâvûd, Savm 22', null,
+    'Ülkemizde en çok bilinen iftar duasıdır; senedi zayıf sayılır. Hadis tekniği bakımından ' +
+    'daha sağlam olan iftar duası, hemen aşağıdaki “Zehebe’z-zamaü…” rivayetidir.'),
   d('ramazan-2', 'ramazan', 'Oruç Açıldığında',
     'ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ',
     'Zehebe’z-zamaü vebtelleti’l-urûku ve sebete’l-ecru inşâallâh.',
@@ -221,7 +226,9 @@ export const DUAS = [
     'رَبِّ اغْفِرْ وَارْحَمْ إِنَّكَ أَنْتَ الْأَعَزُّ الْأَكْرَمُ',
     'Rabbiğfir verham inneke ente’l-e’azzü’l-ekrem.',
     'Rabbim! Bağışla ve merhamet et. Şüphesiz sen en üstün ve en cömert olansın.',
-    'İbn Ebî Şeybe, Musannef, IV/68'),
+    'İbn Ebî Şeybe, Musannef, IV/68', null,
+    'Hz. Peygamber’e değil, sahâbeye (İbn Mes’ûd ve İbn Ömer) dayandırılan bir duadır. ' +
+    'Sa’y sırasında belirli bir dua okumak şart değildir; kişi dilediği duayı edebilir.'),
 
   /* --- Korunma --- */
   d('korunma-1', 'korunma', 'Her Türlü Kötülükten',
@@ -253,22 +260,29 @@ export const HADITH_CATEGORIES = [
   { id: 'infak', name: 'İnfak ve Yardımlaşma' }
 ];
 
-/** h(id, kategori, metin, kaynak, açıklama) */
-const h = (id, cat, text, src, note) => ({ id, cat, text, src, note });
+/** h(id, kategori, metin, kaynak, açıklama, derece?)
+ *
+ *  `derece` yalnızca DİKKAT GEREKTİREN rivayetlerde doldurulur:
+ *  yaygın olarak bilinen ama senedi zayıf sayılan sözler. Boş bırakılması
+ *  "sahih" iddiası değildir; kartta yalnızca kaynak gösterilir. Kütüb-i
+ *  Sitte'nin sahihlerinden (Buhârî, Müslim) gelenlerde ayrıca not düşülmez. */
+const h = (id, cat, text, src, note, derece = null) => ({ id, cat, text, src, note, derece });
 
 export const HADITHS = [
   h('h1', 'niyet', 'Ameller ancak niyetlere göredir. Herkese niyet ettiği şey vardır.',
     'Buhârî, Bed’ü’l-vahy 1; Müslim, İmâret 155',
     'Hadis külliyatının başında yer alan bu söz, dış görünüşü aynı olan iki işi birbirinden ayıranın kalpteki maksat olduğunu belirtir.'),
   h('h2', 'ahlak', 'Sizin en hayırlınız, ahlâkı en güzel olanınızdır.',
-    'Buhârî, Menâkıb 23; Müstakil rivayet: Tirmizî, Birr 47',
+    'Buhârî, Menâkıb 23; Müslim, Fedâil 68; Tirmizî, Birr 47',
     'Üstünlük ölçüsünün ibadetin miktarı değil, insanla ilişkinin niteliği olduğunu vurgular.'),
   h('h3', 'ahlak', 'Müslüman, elinden ve dilinden diğer insanların güvende olduğu kimsedir.',
     'Buhârî, İman 4; Müslim, İman 64',
     'İmanın toplumsal karşılığını tanımlar: çevresine zarar vermemek.'),
-  h('h4', 'namaz', 'Namaz dinin direğidir.',
-    'Beyhakî, Şuabü’l-îmân, III/39',
-    'Namazın diğer ibadetleri ayakta tutan yapı taşı olduğu benzetmesiyle anlatılır.'),
+  h('h4', 'namaz', 'İşin başı İslâm, direği namaz, zirvesi Allah yolunda cihaddır.',
+    'Tirmizî, Îmân 8; İbn Mâce, Fiten 12',
+    'Namazın diğer ibadetleri ayakta tutan yapı taşı olduğu benzetmesiyle anlatılır. ' +
+    'Halk arasında yaygın olan “Namaz dinin direğidir” kısa şekli Beyhakî’nin Şuabü’l-îmân’ında ' +
+    'geçer ve senedi zayıf kabul edilir; aynı mana, yukarıdaki sahih rivayette yer alır.'),
   h('h5', 'namaz', 'Kişi ile küfür arasında namazın terki vardır.',
     'Müslim, İman 134; Tirmizî, İman 9',
     'Âlimler bu hadisi, namazı önemsememe tutumuna yönelik ağır bir uyarı olarak yorumlar.'),
@@ -331,7 +345,8 @@ export const INFO_ARTICLES = [
       'Başın en az dörtte biri bir kez mesh edilir. — FARZ',
       'Kulaklar ve boyun mesh edilir.',
       'Ayaklar topuklarla birlikte üç kez yıkanır; önce sağ, sonra sol. — FARZ',
-      'Hanefî mezhebine göre abdestin farzı dörttür: yüzü yıkamak, kolları yıkamak, başı mesh etmek, ayakları yıkamak.'
+      'Hanefî mezhebine göre abdestin farzı dörttür: yüzü yıkamak, kolları yıkamak, başı mesh etmek, ayakları yıkamak.',
+      'Not: Bu yazı Hanefî mezhebine göredir. Şâfiî mezhebinde niyet ve tertip de farz sayılır.'
     ],
     ['Mâide 6', 'Diyanet İşleri Başkanlığı, İlmihal, I/197–204']),
 
@@ -353,11 +368,11 @@ export const INFO_ARTICLES = [
       'Kıbleye dönülür, niyet edilir.',
       '"Allahu ekber" diyerek iftitah tekbiri alınır ve eller bağlanır.',
       'Sübhâneke okunur, ardından Eûzü-Besmele çekilir.',
-      'Fâtiha sûresi okunur. — FARZ',
-      'Ardından bir sûre veya en az üç âyet okunur (zamm-ı sûre).',
-      'Tekbir alınarak rükûya varılır; üç kez "Sübhâne rabbiye’l-azîm" denir. — FARZ',
+      'Fâtiha sûresi okunur. — KIRAAT FARZ, Fâtiha okumak Hanefî’de VÂCİP',
+      'Ardından bir sûre veya en az üç âyet okunur (zamm-ı sûre). — VÂCİP',
+      'Tekbir alınarak rükûya varılır. — RÜKÛ FARZ; içinde üç kez "Sübhâne rabbiye’l-azîm" denmesi sünnettir.',
       '"Semiallâhü limen hamideh" diyerek doğrulunur, "Rabbenâ leke’l-hamd" denir.',
-      'Tekbirle secdeye gidilir; üç kez "Sübhâne rabbiye’l-a’lâ" denir. — FARZ',
+      'Tekbirle secdeye gidilir. — SECDE FARZ; içinde üç kez "Sübhâne rabbiye’l-a’lâ" denmesi sünnettir.',
       'Oturulup tekrar secde yapılır, sonra ikinci rekâta kalkılır.',
       'İkinci rekâtta Fâtiha ve sûre okunur, rükû ve secdeler yapılır.',
       'Oturuşta Ettehiyyâtü, Allâhümme salli–bârik ve Rabbenâ duaları okunur. — SON OTURUŞ FARZ',
@@ -393,8 +408,8 @@ export const INFO_ARTICLES = [
   a('oruc-bozan', 'oruc', 'Orucu Bozan ve Bozmayan Durumlar',
     'Nelerin kaza, nelerin kefaret gerektirdiği.',
     [
-      'BOZAN — kaza gerektirir: unutarak değil bilerek yeme içme, ilaç kullanmak, kusmayı kendi isteğiyle yapmak.',
-      'BOZAN — kaza ve kefaret gerektirir: kasten yeme, içme veya cinsel ilişki.',
+      'BOZAN — yalnız kaza gerektirir: ağız yoluyla ilaç almak, ağız dolusu kusmayı kendi isteğiyle yapmak, gıda ya da ilaç sayılmayan bir şeyi yutmak.',
+      'BOZAN — kaza ve kefaret gerektirir: oruçlu olduğunu bilerek kasten yemek, içmek veya cinsel ilişkide bulunmak.',
       'BOZMAZ: unutarak yiyip içmek, istem dışı kusmak, diş fırçalamak (yutmamak şartıyla), kan aldırmak, gusül abdesti almak, koku sürünmek.',
       'BOZMAZ: göz damlası, iğne (besleyici olmayan) — bu konuda çağdaş kurul kararları vardır.',
       'Hastalık ve yolculuk hâlinde oruç ertelenebilir, sonradan kaza edilir.'
@@ -430,10 +445,10 @@ export const INFO_ARTICLES = [
       'ZEKÂT: farzdır. Belirli mallar üzerinden, belirli bir nisaba ulaşınca, belirli bir oranda (%2,5) ve belirli kişilere verilir. Yılda bir kez hesaplanır.',
       'SADAKA: gönüllüdür. Miktarı, zamanı ve kime verileceği serbesttir. Her zaman verilebilir.',
       'Zekât yalnızca Tevbe 60’ta sayılan sınıflara verilebilir; sadaka daha geniş bir alanda kullanılabilir.',
-      'Bir gülümseme veya yoldan bir engeli kaldırmanın da sadaka sayıldığı hadislerde belirtilmiştir.',
+      'Bir gülümseme (Tirmizî, Birr 36) veya yoldan bir engeli kaldırmanın (Buhârî, Cihâd 128; Müslim, Zekât 56) da sadaka sayıldığı hadislerde belirtilmiştir.',
       'Zekât verilmediğinde dinî bir borç doğar; sadaka verilmediğinde böyle bir borç doğmaz.'
     ],
-    ['Tevbe 60', 'Buhârî, Edeb 33', 'Diyanet İşleri Başkanlığı, İlmihal, I/430–433']),
+    ['Tevbe 60', 'Tirmizî, Birr 36', 'Buhârî, Cihâd 128', 'Diyanet İşleri Başkanlığı, İlmihal, I/430–433']),
 
   a('vitir', 'namaz', 'Vitir Namazı Nasıl Kılınır?',
     'Yatsıdan sonra kılınan üç rekâtlık namaz.',
@@ -539,7 +554,7 @@ export const MINUTE_CARDS = [
   { id: 'm8', q: 'Zekât nisabı nedir?', a: '80,18 gram altın veya 561 gram gümüş değerinde mala, üzerinden bir kamerî yıl geçmiş olarak sahip olmaktır.', link: 'zekat-nisap' },
   { id: 'm9', q: 'Cuma günü ne okunur?', a: 'Kehf sûresini okumak sünnet olarak tavsiye edilmiştir. Ayrıca salavat getirmek de tavsiye edilir.', link: 'cuma' },
   { id: 'm10', q: 'Gusül abdestinin farzları nelerdir?', a: 'Hanefî mezhebine göre üçtür: ağza su vermek, buruna su vermek ve bütün bedeni yıkamak.', link: 'gusul' },
-  { id: 'm11', q: 'Orucu neler bozmaz?', a: 'Unutarak yiyip içmek, istem dışı kusmak, diş fırçalamak, kan aldırmak ve gusletmek orucu bozmaz.', link: 'oruc-bozan' },
+  { id: 'm11', q: 'Orucu neler bozmaz?', a: 'Unutarak yiyip içmek, istem dışı kusmak, yutmamak şartıyla diş fırçalamak, kan aldırmak ve gusletmek orucu bozmaz.', link: 'oruc-bozan' },
   { id: 'm12', q: 'Abdesti ne bozar?', a: 'Ön ve arka yoldan çıkanlar, ağız dolusu kusmak, bilinç kaybı ve namazda sesli gülmek abdesti bozar.', link: 'abdest-bozan' }
 ];
 

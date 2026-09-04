@@ -20,7 +20,7 @@ const FIELDS = [
   { id: 'nakit', label: 'Nakit ve banka', hint: 'TL, döviz karşılığı, vadeli hesaplar', unit: '₺' },
   { id: 'altin', label: 'Altın', hint: 'Ziynet ve külçe dahil, gram olarak', unit: 'gr', gram: 'gold' },
   { id: 'gumus', label: 'Gümüş', hint: 'Gram olarak', unit: 'gr', gram: 'silver' },
-  { id: 'yatirim', label: 'Yatırım', hint: 'Hisse, fon, kripto varlık', unit: '₺' },
+  { id: 'yatirim', label: 'Yatırım', hint: 'Hisse senedi, yatırım fonu, katılım hesabı', unit: '₺' },
   { id: 'ticari', label: 'Ticari mal', hint: 'Satmak amacıyla elde tutulan mallar', unit: '₺' },
   { id: 'alacak', label: 'Alacaklar', hint: 'Tahsil edilmesi beklenen borçlar', unit: '₺' },
   { id: 'borc', label: 'Borçlar', hint: 'Vadesi gelmiş borçlar — toplamdan düşülür', unit: '₺', negative: true }

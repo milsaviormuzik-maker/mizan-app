@@ -44,6 +44,7 @@ export function hadithCard(hadith, opts = {}) {
     </div>
     <p class="t-body" style="font-size:16px;line-height:1.62">“${esc(hadith.text)}”</p>
     <p class="source" style="margin-top:10px">${esc(hadith.src)}</p>
+    ${hadith.derece ? `<p class="rivayet-not">${esc(hadith.derece)}</p>` : ''}
     ${hadith.note ? `
       <div class="card--flush" style="margin-top:14px;padding:13px 14px;border-radius:var(--r-md)">
         <p class="t-sec">${esc(hadith.note)}</p>
@@ -68,6 +69,7 @@ export function duaCard(dua, opts = {}) {
     <hr class="divider" style="margin:14px 0">
     <p class="t-body">${esc(dua.tr)}</p>
     <p class="source" style="margin-top:10px">${esc(dua.src)}</p>
+    ${dua.derece ? `<p class="rivayet-not">${esc(dua.derece)}</p>` : ''}
     <div class="card__actions">
       ${dua.ayah ? `<button class="chip" data-act="dua-listen" data-id="${dua.id}">${icon('volume', 15)} Sesli Dinle</button>` : ''}
       <button class="chip" data-act="dua-share" data-id="${dua.id}">${icon('share', 15)} Paylaş</button>
